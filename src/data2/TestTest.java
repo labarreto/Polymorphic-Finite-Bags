@@ -10,13 +10,13 @@ package data2;
  *
  * @author ldbruby95
  */
-public class Data2 {
-
-    /**
-     * @param args the command line arguments
-     */
+public class TestTest {
+    
+    
+    
     public static void main(String[] args) {
         // TODO code application logic here
     }
+    
     
 }
