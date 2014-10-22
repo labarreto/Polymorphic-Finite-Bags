@@ -6,11 +6,12 @@
 
 package data2;
 
-/**
- *
- * @author ldbruby95
- */
-interface finiteBag { //this is going to implement some 
+
+interface IA {
+    //something in here
+    //bloop bloop
+}
+interface finiteBag extends IA{ //this is going to implement some 
                       //type of iteration abstraction
         public int cardinality();
         
