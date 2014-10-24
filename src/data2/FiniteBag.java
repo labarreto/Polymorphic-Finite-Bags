@@ -8,7 +8,7 @@ package data2;
 
 
 
-interface finiteBag extends IA{ //this is going to implement some 
+interface finiteBag<D extends Comparable> { //this is going to implement some 
                       //type of iteration abstraction
         public int cardinality();
         
