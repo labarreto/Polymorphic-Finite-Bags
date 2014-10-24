@@ -11,13 +11,20 @@ package data2;
  */
 //empty self-balancing binary tree
 public class SBBT_MT<D extends Comparable> implements finiteBag<D> {
-    
+
     SBBT_MT() {
     }
+
     finiteBag left;
     D here;
     finiteBag right;
-    
+
+    public SBBT_MT(finiteBag left, D here, finiteBag right) {
+        this.left = left;
+        this.here = here;
+        this.right = right;
+    }
+
     public static finiteBag empty() {
         return new SBBT_MT();
     }
@@ -38,28 +45,31 @@ public class SBBT_MT<D extends Comparable> implements finiteBag<D> {
 
     // (remove t elt) --> finite-bag where t is a finite-bag and elt is an int
     public finiteBag remove(D elt) {
-        return this;
+        return empty();
     }
 
     public finiteBag add(D elt) {
         return new SBBT_ST(empty(), elt, empty());
     }
-        // (add t elt) --> finite-set where t is a finite-set and elt is an ent
+    // (add t elt) --> finite-set where t is a finite-set and elt is an ent
 
     public finiteBag union(finiteBag u) {
         return u;
     }
 
     public finiteBag inter(finiteBag u) {
-        return new SBBT_MT();
+        return empty();
     }
 
     public boolean equal(finiteBag u) {
         return u.isEmptyHuh();
+        // only will be equal if finiteBag in question
+        // is also empty. 
     }
 
     public boolean subset(finiteBag u) {
-        return false;
+        return true;
+        //empty set is a subset of all sets
     }
 
     public int multiplicity(D elt) {

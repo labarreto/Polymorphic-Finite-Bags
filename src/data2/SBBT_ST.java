@@ -38,7 +38,14 @@ finiteBag right;
 
     // (member t elt) --> boolean where t is a finite-bag and elt is an int
     public boolean member(D elt) {
-   return false;
+        //compareTo part of comparable
+    if (elt.compareTo(this.here) == 0) {
+        return true;
+    } else if (elt.compareTo(this.here) > 0) {
+        return right.member(elt);
+    } else {
+        return left.member(elt);
+    }
     }
 
     // (remove t elt) --> finite-bag where t is a finite-bag and elt is an int
@@ -47,12 +54,21 @@ finiteBag right;
     }
 
     public finiteBag add(D elt) {
-        return this;
+        if (elt.compareTo(this.here) == 0) {
+            return this;
+        } else if (elt.compareTo(this.here) > 0) {
+            return new SBBT_ST(this.left, this.here, this.right.add(elt));
+        } else {
+            return new SBBT_ST(this.left.add(elt), this.here, this.right);
+        }
     }
         // (add t elt) --> finite-set where t is a finite-set and elt is an ent
 
     public finiteBag union(finiteBag u) {
-        return this;
+        // because this is a multiset with multiplicity,
+        // items can repeat! so union can just be both sets
+        return u;
+        //gotta figure out how to do this. 
     }
 
     public finiteBag inter(finiteBag u) {
