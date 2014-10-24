@@ -11,16 +11,17 @@ package data2;
  * @author ldbruby95
  */
 //self balancing binary tree with STuff in it.
-public class SBBT_ST implements finiteBag{
+public class SBBT_ST<D extends Comparable> implements finiteBag<D>{
     
     SBBT_ST() {
     }
 
-    public int here;
-    public finiteBag left;
-    public finiteBag right;
     
-    public SBBT_ST(finiteBag left, int here, finiteBag right) {
+     finiteBag left;
+   D here;
+finiteBag right;
+    
+    public SBBT_ST(finiteBag left, D here, finiteBag right) {
         this.left = left;
         this.here = here;
         this.right = right;
@@ -36,16 +37,16 @@ public class SBBT_ST implements finiteBag{
     }
 
     // (member t elt) --> boolean where t is a finite-bag and elt is an int
-    public boolean member(int elt) {
+    public boolean member(D elt) {
    return false;
     }
 
     // (remove t elt) --> finite-bag where t is a finite-bag and elt is an int
-    public finiteBag remove(int elt) {
+    public finiteBag remove(D elt) {
       return this;
     }
 
-    public finiteBag add(int elt) {
+    public finiteBag add(D elt) {
         return this;
     }
         // (add t elt) --> finite-set where t is a finite-set and elt is an ent
@@ -66,7 +67,7 @@ public class SBBT_ST implements finiteBag{
         return false;
     }
 
-    public int multiplicity() {
+    public int multiplicity(D elt) {
         return 0;
     } //shoudl not always be 0. but for now,
 //it has to be

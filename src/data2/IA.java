@@ -11,22 +11,17 @@ import java.util.*;
  *
  * @author ldbruby95
  */
-public class IA<D> implements Iterator {
+public interface IA<D> {
     //abstract iterator takes in generic type D. 
-    @Override
-    public boolean hasNext() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
 
-    @Override
-    public Object next() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+    
+    
+    public boolean hasNext();
 
-    @Override
-    public void remove() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+
+    public D here(); //one single generic object D 
+
+    public IA<D> next(); //
     //something in here
     //bloop bloop
 }
