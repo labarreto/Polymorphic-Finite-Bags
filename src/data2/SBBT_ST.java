@@ -77,10 +77,12 @@ finiteBag right;
 
     public boolean equal(finiteBag u) {
         return u.isEmptyHuh();
+        //
     }
 
     public boolean subset(finiteBag u) {
         return false;
+        //
     }
 
     public int multiplicity(D elt) {
