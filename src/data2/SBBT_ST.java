@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package data2;
 
 /**
@@ -11,58 +10,77 @@ package data2;
  * @author ldbruby95
  */
 //self balancing binary tree with STuff in it.
-public class SBBT_ST<D extends Comparable> implements finiteBag<D>{
-    
+public class SBBT_ST<D extends Comparable> implements finiteBag<D> {
+
     SBBT_ST() {
     }
 
-    
-     finiteBag left;
-   D here;
-finiteBag right;
-    
-    public SBBT_ST(finiteBag left, D here, finiteBag right) {
+    finiteBag left;
+    D here;
+    finiteBag right;
+    int count;
+
+    public SBBT_ST(finiteBag left, D here, finiteBag right, int count) {
         this.left = left;
         this.here = here;
         this.right = right;
+        this.count = count;
     }
 
+    public int getCount(D elt) {
+        return this.count;
+    }
     public int cardinality() {
-       return 0; // shoudl not be 0, but for now
+        return 0; // shoudl not be 0, but for now
     }
 
     // (isEmptyHuh t) --> boolean where t is a finite bag
     public boolean isEmptyHuh() {
-       return false;
+        return false;
     }
 
     // (member t elt) --> boolean where t is a finite-bag and elt is an int
     public boolean member(D elt) {
         //compareTo part of comparable
-    if (elt.compareTo(this.here) == 0) {
-        return true;
-    } else if (elt.compareTo(this.here) > 0) {
-        return right.member(elt);
-    } else {
-        return left.member(elt);
-    }
+        if (elt.compareTo(this.here) == 0) {
+            return true;
+        } else if (elt.compareTo(this.here) > 0) {
+            return right.member(elt);
+        } else {
+            return left.member(elt);
+        }
     }
 
     // (remove t elt) --> finite-bag where t is a finite-bag and elt is an int
     public finiteBag remove(D elt) {
-      return this;
+        return this;
+        //come back to this. 
+    }
+
+    public finiteBag removeN(D elt, int n) {
+        return this;
+        //come back to this.
+    }
+
+    public finiteBag removeAll(D elt) {
+        return this;
+        //come back to this. 
     }
 
     public finiteBag add(D elt) {
         if (elt.compareTo(this.here) == 0) {
             return this;
         } else if (elt.compareTo(this.here) > 0) {
-            return new SBBT_ST(this.left, this.here, this.right.add(elt));
+            return new SBBT_ST(this.left, this.here, this.right.add(elt), this.count);
         } else {
-            return new SBBT_ST(this.left.add(elt), this.here, this.right);
+            return new SBBT_ST(this.left.add(elt), this.here, this.right, this.count);
         }
     }
+
         // (add t elt) --> finite-set where t is a finite-set and elt is an ent
+    public finiteBag addN(D elt, int n) {
+        return this;
+    }
 
     public finiteBag union(finiteBag u) {
         // because this is a multiset with multiplicity,
@@ -73,6 +91,10 @@ finiteBag right;
 
     public finiteBag inter(finiteBag u) {
         return this;
+    }
+
+    public finiteBag diff(finiteBag u) {
+        return u; //this is wrong. 
     }
 
     public boolean equal(finiteBag u) {
@@ -92,5 +114,4 @@ finiteBag right;
 //multiplicity of a member of a multiset
     //is the number of times it appears in the multiset. 
 
-    
 }

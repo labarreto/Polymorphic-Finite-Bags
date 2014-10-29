@@ -10,6 +10,11 @@ package data2;
  * @author ldbruby95
  */
 //empty self-balancing binary tree
+
+//      AVL ... 1 - 2 Tree
+
+//Red-Black ... 2 - 3 Tree
+//fake1 and fake 2 are functions
 public class SBBT_MT<D extends Comparable> implements finiteBag<D> {
 
     SBBT_MT() {
@@ -18,13 +23,19 @@ public class SBBT_MT<D extends Comparable> implements finiteBag<D> {
     finiteBag left;
     D here;
     finiteBag right;
+    int count;
 
-    public SBBT_MT(finiteBag left, D here, finiteBag right) {
+    public SBBT_MT(finiteBag left, D here, finiteBag right, int count) {
         this.left = left;
         this.here = here;
         this.right = right;
+        this.count = count;
     }
-
+    
+    
+    public int getCount(D elt){
+        return this.count;
+    }
     public static finiteBag empty() {
         return new SBBT_MT();
     }
@@ -48,10 +59,25 @@ public class SBBT_MT<D extends Comparable> implements finiteBag<D> {
         return empty();
     }
 
+    public finiteBag removeN(D elt, int n) {
+        return empty();
+    }
+
+    public finiteBag removeAll(D elt) {
+        return empty();
+    }
+
     public finiteBag add(D elt) {
-        return new SBBT_ST(empty(), elt, empty());
+        return new SBBT_ST(empty(), elt, empty(), this.count);
     }
     // (add t elt) --> finite-set where t is a finite-set and elt is an ent
+
+    public finiteBag addN(D elt, int n) {
+        for (int i = 0; i <= n; i++) {
+            this.add(elt);
+        }
+        return this;
+    }
 
     public finiteBag union(finiteBag u) {
         return u;
@@ -59,6 +85,10 @@ public class SBBT_MT<D extends Comparable> implements finiteBag<D> {
 
     public finiteBag inter(finiteBag u) {
         return empty();
+    }
+
+    public finiteBag diff(finiteBag u) {
+        return u;
     }
 
     public boolean equal(finiteBag u) {

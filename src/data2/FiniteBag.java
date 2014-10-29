@@ -11,6 +11,7 @@ interface finiteBag<D extends Comparable> { //this is going to implement some
     // they don't take in just one specific type of parameter since
     // it could be different types. 
 
+    public int getCount(D elt);
     public int cardinality(); // size of set. always consistently going
     // to return an int. 
 
@@ -23,7 +24,13 @@ interface finiteBag<D extends Comparable> { //this is going to implement some
     // (remove t elt) --> finite-bag where t is a finite-bag and elt is an int
     public finiteBag remove(D elt);
 
+    public finiteBag removeN(D elt, int n);
+
+    public finiteBag removeAll(D elt);
+
     public finiteBag add(D elt);
+
+    public finiteBag addN(D elt, int n);
 
     // (add t elt) --> finite-set where t is a finite-set and elt is an ent
     public boolean equal(finiteBag u);
@@ -33,6 +40,8 @@ interface finiteBag<D extends Comparable> { //this is going to implement some
     public finiteBag union(finiteBag u);
 
     public finiteBag inter(finiteBag u);
+
+    public finiteBag diff(finiteBag u);
 
     public int multiplicity(D elt); //multiplicity of a member of a multiset
     //is the number of times it appears in the multiset. consistently going
