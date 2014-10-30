@@ -11,6 +11,14 @@ interface finiteBag<D extends Comparable> { //this is going to implement some
     // they don't take in just one specific type of parameter since
     // it could be different types. 
 
+    
+    
+//      AVL ... 1 - 2 Tree
+//Red-Black ... 2 - 3 Tree
+//fake1 and fake 2 are functions
+//t1 is a class, 
+//fake1 would be nested class or private class only used in smart insert
+    
     public int getCount(D elt);
     public int cardinality(); // size of set. always consistently going
     // to return an int. 

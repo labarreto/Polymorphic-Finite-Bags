@@ -11,10 +11,6 @@ package data2;
  */
 //empty self-balancing binary tree
 
-//      AVL ... 1 - 2 Tree
-
-//Red-Black ... 2 - 3 Tree
-//fake1 and fake 2 are functions
 public class SBBT_MT<D extends Comparable> implements finiteBag<D> {
 
     SBBT_MT() {
