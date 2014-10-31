@@ -19,7 +19,7 @@ interface finiteBag<D extends Comparable> { //this is going to implement some
 //t1 is a class, 
 //fake1 would be nested class or private class only used in smart insert
     
-    public int getCount(D elt);
+    public int getCount(D elt); //replaces multiplicity
     public int cardinality(); // size of set. always consistently going
     // to return an int. 
 
@@ -51,7 +51,5 @@ interface finiteBag<D extends Comparable> { //this is going to implement some
 
     public finiteBag diff(finiteBag u);
 
-    public int multiplicity(D elt); //multiplicity of a member of a multiset
-    //is the number of times it appears in the multiset. consistently going
-    // to return an integer despite checking for abstract object types. 
+    //replacing multiplicity with getCount 
 }

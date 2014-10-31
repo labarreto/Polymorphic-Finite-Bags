@@ -99,9 +99,6 @@ public class SBBT_MT<D extends Comparable> implements finiteBag<D> {
         //empty set is a subset of all sets
     }
 
-    public int multiplicity(D elt) {
-        return 0;
-    } //multiplicity of a member of a multiset
-    //is the number of times it appears in the multiset. 
+
 
 }
