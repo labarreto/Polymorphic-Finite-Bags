@@ -11,17 +11,22 @@ import java.util.*;
  *
  * @author ldbruby95
  */
-public interface IA<D> {
-    //abstract iterator takes in generic type D. 
+public class SequenceMT<D> implements Sequence<D> {
 
     
+    public boolean hasNext(){
+        return false;
+    }
+
+    public D here() {
+        return null;
+    }
+
+    public SequenceMT<D> next(){
+        return this;
+    }
     
-    public boolean hasNext();
 
-
-    public D here(); //one single generic object D 
-
-    public IA<D> next(); //
     //something in here
     //bloop bloop
 }

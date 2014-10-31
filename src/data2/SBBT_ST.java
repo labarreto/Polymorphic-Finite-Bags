@@ -28,10 +28,19 @@ public class SBBT_ST<D extends Comparable> implements finiteBag<D> {
     }
 
     public int getCount(D elt) {
-        return this.count;
+        if (elt.equals(this.here)) {
+            return count;
+        } else {
+            if (elt.compareTo(here) < 0) {
+                return this.left.getCount(elt);
+            } else {
+                return this.right.getCount(elt);
+            }
+            
+        }
     }
     public int cardinality() {
-        return 0; // shoudl not be 0, but for now
+        return left.cardinality() + count + right.cardinality();
     }
 
     // (isEmptyHuh t) --> boolean where t is a finite bag
@@ -44,17 +53,22 @@ public class SBBT_ST<D extends Comparable> implements finiteBag<D> {
         //compareTo part of comparable
         if (elt.compareTo(this.here) == 0) {
             return true;
-        } else if (elt.compareTo(this.here) > 0) {
-            return right.member(elt);
-        } else {
+        } else if (elt.compareTo(this.here) < 0) {
             return left.member(elt);
+        } else {
+            return right.member(elt);
         }
     }
 
     // (remove t elt) --> finite-bag where t is a finite-bag and elt is an int
     public finiteBag remove(D elt) {
-        return this;
-        //come back to this. 
+        if (elt.equals(here)) {
+            return new SBBT_ST(this.left, this.here, this.right, this.count - 1);
+        } else if (elt.compareTo(here) < 0) {
+            return new SBBT_ST(this.left.remove(elt), this.here, this.right, this.count);
+        } else {
+            return new SBBT_ST(this.left, this.here, this.right.remove(elt), this.count);
+        }
     }
 
     public finiteBag removeN(D elt, int n) {

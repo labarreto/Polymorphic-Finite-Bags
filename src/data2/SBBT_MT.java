@@ -30,8 +30,9 @@ public class SBBT_MT<D extends Comparable> implements finiteBag<D> {
     
     
     public int getCount(D elt){
-        return this.count;
+        return 0;
     }
+    
     public static finiteBag empty() {
         return new SBBT_MT();
     }
@@ -56,11 +57,11 @@ public class SBBT_MT<D extends Comparable> implements finiteBag<D> {
     }
 
     public finiteBag removeN(D elt, int n) {
-        return empty();
+        return this.remove(elt);
     }
 
     public finiteBag removeAll(D elt) {
-        return empty();
+        return this.remove(elt);
     }
 
     public finiteBag add(D elt) {
