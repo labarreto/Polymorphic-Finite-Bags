@@ -12,22 +12,29 @@ package data2;
 //empty self-balancing binary tree
 
 public class SBBT_MT<D extends Comparable> implements finiteBag<D> {
-
-    SBBT_MT() {
+    boolean isBlack;
+    
+    public SBBT_MT() {
+        this.isBlack = true;
     }
 
-    finiteBag left;
-    D here;
-    finiteBag right;
-    int count;
-
-    public SBBT_MT(finiteBag left, D here, finiteBag right, int count) {
-        this.left = left;
-        this.here = here;
-        this.right = right;
-        this.count = count;
+    public SBBT_MT(boolean isBlack) {
+        this.isBlack = isBlack; 
     }
     
+
+    public boolean isBlackHuh() {
+        return isBlack;
+    }
+
+    
+    public finiteBag blacken() {
+        return new SBBT_MT();         
+    }
+    
+    public finiteBag balance() {
+        return this;
+    }
     
     public int getCount(D elt){
         return 0;
@@ -65,7 +72,7 @@ public class SBBT_MT<D extends Comparable> implements finiteBag<D> {
     }
 
     public finiteBag add(D elt) {
-        return new SBBT_ST(empty(), elt, empty(), this.count);
+        return new SBBT_ST(empty(), elt, empty(), 1, false);
     }
     // (add t elt) --> finite-set where t is a finite-set and elt is an ent
 
@@ -98,6 +105,8 @@ public class SBBT_MT<D extends Comparable> implements finiteBag<D> {
         return true;
         //empty set is a subset of all sets
     }
+
+
 
 
 

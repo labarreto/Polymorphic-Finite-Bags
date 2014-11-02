@@ -21,12 +21,17 @@ public class SBBT_ST<D extends Comparable> implements finiteBag<D> {
     D here;
     finiteBag right;
     int count;
+    boolean isBlack;
 
     public SBBT_ST(finiteBag left, D here, finiteBag right, int count) {
         this.left = left;
         this.here = here;
         this.right = right;
         this.count = count;
+    }
+    
+    public SBBT_ST(finiteBag left, D here, finiteBag right, int count, boolean isBlack){
+        
     }
 
     public int getCount(D elt) {
@@ -124,6 +129,21 @@ public class SBBT_ST<D extends Comparable> implements finiteBag<D> {
     }
     //have to figure out smart insert. 
 
+
+    public finiteBag blacken() {
+        return new SBBT_ST(this.left, this.here, this.right, this.count, true);
+    }
+    
+    public boolean isBlackHuh(){
+        return isBlack;
+    }
+    
+    public finiteBag balance() {
+        if ((this.isBlackHuh() && this.left.isBlackHuh() && this.left.left.isBlacHuh())) {
+        //error here because i can't get the left of left. 
+            return new SBBT_ST(STUFF IN HERE);
+        }
+    }
     public finiteBag union(finiteBag u) {
         // because this is a multiset with multiplicity,
         // items can repeat! so union can just be both sets

@@ -10,11 +10,16 @@ package data2;
  *
  * @author ldbruby95
  */
+
+
 public class TestTest {
     static int count;
     static finiteBag mt = new SBBT_MT();
     
     
+    
+
+
         public static void testCardinalityMT(finiteBag u) {
         // first check that it's empty. 
         if (u.isEmptyHuh()) {

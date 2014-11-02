@@ -39,6 +39,11 @@ interface finiteBag<D extends Comparable> { //this is going to implement some
     public finiteBag add(D elt);
 
     public finiteBag addN(D elt, int n);
+    
+    public finiteBag blacken();
+    public boolean isBlackHuh();
+    
+//    public finiteBag balance();
 
     // (add t elt) --> finite-set where t is a finite-set and elt is an ent
     public boolean equal(finiteBag u);
