@@ -5,6 +5,8 @@
  */
 package data2;
 
+import java.util.*;
+
 /**
  *
  * @author ldbruby95
@@ -36,9 +38,10 @@ public class SBBT_ST<D extends Comparable> implements finiteBag<D> {
             } else {
                 return this.right.getCount(elt);
             }
-            
+
         }
     }
+
     public int cardinality() {
         return left.cardinality() + count + right.cardinality();
     }
@@ -62,34 +65,49 @@ public class SBBT_ST<D extends Comparable> implements finiteBag<D> {
 
     // (remove t elt) --> finite-bag where t is a finite-bag and elt is an int
     public finiteBag remove(D elt) {
-        //the only case where nothing happens is if count for elt is 0 since there
-        //would be no elt to remove. 
-        if (getCount(elt) != 0) {
-            if (elt.equals(here)) {
-                return new SBBT_ST(this.left, this.here, this.right, this.count - 1);
-            } else if (elt.compareTo(here) < 0) {
-                return new SBBT_ST(this.left.remove(elt), this.here, this.right, this.count);
-            } else {
-                return new SBBT_ST(this.left, this.here, this.right.remove(elt), this.count);
-            }
+        if (elt.equals(this.here)) {
+            //there's a way to do this without a nested if. 
+            return new SBBT_ST(this.left, this.here, this.right, this.count - 1);
+        } else if (elt.compareTo(here) < 0) {
+            return new SBBT_ST(this.left.remove(elt), this.here, this.right, this.count);
+        } else {
+            return new SBBT_ST(this.left, this.here, this.right.remove(elt), this.count);
         }
-        //in the case where count for elt is 0, returning existing set. :) 
-        return this;
+
     }
 
     public finiteBag removeN(D elt, int n) {
-        return this;
-        //come back to this.
+        //figure out a way of calculating max amount of elt in multiset.
+        int max = Math.max(0, this.getCount(elt) - n);
+        //returns the larger of a and b. 
+        
+        //if this.getCount(elt)-n is equal to 0, then finiteBag will remove 0
+        //http://www.tutorialspoint.com/java/lang/math_max_int.htm
+        if (elt.equals(this.here)) {
+            //returning count - n elements
+            return new SBBT_ST(this.left, this.here, this.right, max);
+        } else if (elt.compareTo(this.here) < 0) {
+            return new SBBT_ST(this.left.removeN(elt, n), this.here, this.right, this.getCount(elt));
+        } else {
+            return new SBBT_ST(this.left, this.here, this.right.removeN(elt, n), this.getCount(elt));
+        }
     }
 
     public finiteBag removeAll(D elt) {
-        return this;
-        //come back to this. 
+      
+        if (elt.equals(this.here)){
+            return new SBBT_ST(this.left, this.here, this.right, 0);
+            //take the union of the left and right trees to put them together
+        } else if (elt.compareTo(this.here) < 0 ) {
+            return new SBBT_ST(this.left.removeAll(elt), this.here, this.right, this.getCount(elt));
+        } else {
+            return new SBBT_ST(this.left, this.here, this.right.removeAll(elt), this.getCount(elt));
+        }
     }
 
     public finiteBag add(D elt) {
         //haha jk, this isn't efficient.
-        
+
         if (elt.compareTo(this.here) == 0) {
             return this;
         } else if (elt.compareTo(this.here) > 0) {
@@ -99,7 +117,7 @@ public class SBBT_ST<D extends Comparable> implements finiteBag<D> {
         }
     }
 
-        // (add t elt) --> finite-set where t is a finite-set and elt is an ent
+    // (add t elt) --> finite-set where t is a finite-set and elt is an ent
     public finiteBag addN(D elt, int n) {
         //haha jk, this isn't efficient. 
         return this;
@@ -111,7 +129,7 @@ public class SBBT_ST<D extends Comparable> implements finiteBag<D> {
         // items can repeat! so union can just be both sets
         return u;
         //gotta figure out how to do this. 
-        
+
         //will use new smart insert
     }
 
@@ -120,12 +138,11 @@ public class SBBT_ST<D extends Comparable> implements finiteBag<D> {
         // will use union to join the common elements of 
         //left of u and this, and right of u and this.
         //union uses smart insert, so I cannot write this yet. 
-        
+
         //my ideas are that if here is a member of u, and if count of u for here
         //is more than count of u for this, 
         //then return a new set where you find intersection of left and u left,
         //and intersection of right and u, and return count of this.here
-        
     }
 
     public finiteBag diff(finiteBag u) {
@@ -142,8 +159,8 @@ public class SBBT_ST<D extends Comparable> implements finiteBag<D> {
         //since there would have to be at least 1 item in this that is in u
         //for left, right, and here. 
         //
-        return (u.getCount(here) >= this.getCount(here) &&
-                this.left.subset(u) && this.right.subset(u));
+        return (u.getCount(here) >= this.getCount(here)
+                && this.left.subset(u) && this.right.subset(u));
 
     }
 
