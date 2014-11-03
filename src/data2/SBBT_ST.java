@@ -145,7 +145,7 @@ public class SBBT_ST<D extends Comparable> implements finiteBag<D> {
 
 
             //hahahahaha wowow this is complicated. 
-            return new SBBT_ST(return new SBBT_ST(( (SBBT_ST) this.left).left) , (SBBT_ST)this.left).here, this.right, this.count, this.isBlack()));
+            return new SBBT_ST(return new SBBT_ST(((SBBT_ST) this.left).left) , (SBBT_ST)this.left).here, this.right, this.count, this.isBlack()));
             
             //this return statement is a filler
             //return new SBBT_ST(this.left, this.here, this.right, this.count, this.isBlack);

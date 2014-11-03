@@ -11,7 +11,7 @@ import java.util.*;
  *
  * @author ldbruby95
  */
-public class SequenceMT<D> implements Sequence<D> {
+public class SequenceMT<D extends Comparable> implements Sequence<D> {
 
     public boolean hasNext() {
         return false;

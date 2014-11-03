@@ -5,7 +5,7 @@
  */
 package data2;
 
-interface finiteBag<D extends Comparable> { //this is going to implement some 
+interface finiteBag<D extends Comparable> extends Sequenced<D> { //this is going to implement some 
     //type of iteration abstraction
     // methods that have parameters should take in D elt because 
     // they don't take in just one specific type of parameter since
@@ -53,6 +53,8 @@ interface finiteBag<D extends Comparable> { //this is going to implement some
     public finiteBag inter(finiteBag u);
 
     public finiteBag diff(finiteBag u);
+    
+    public Sequence<D> seq();
 
     //replacing multiplicity with getCount 
 }
