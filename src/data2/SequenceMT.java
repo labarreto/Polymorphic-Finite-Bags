@@ -3,8 +3,8 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package data2;
+
 import java.util.*;
 
 /**
@@ -13,8 +13,7 @@ import java.util.*;
  */
 public class SequenceMT<D> implements Sequence<D> {
 
-    
-    public boolean hasNext(){
+    public boolean hasNext() {
         return false;
     }
 
@@ -22,10 +21,9 @@ public class SequenceMT<D> implements Sequence<D> {
         return null;
     }
 
-    public SequenceMT<D> next(){
+    public SequenceMT<D> next() {
         return this;
     }
-    
 
     //something in here
     //bloop bloop

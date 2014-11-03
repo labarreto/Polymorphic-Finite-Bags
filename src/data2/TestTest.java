@@ -3,41 +3,47 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package data2;
 
 /**
  *
  * @author ldbruby95
  */
+public class TestTest<D extends Comparable> {
 
-
-public class TestTest {
     static int count;
     static finiteBag mt = new SBBT_MT();
-    
-    
-    
+    Randomness rand;
 
+    TestTest(Randomness<D> rand) {
+        this.rand = rand;
+    }
 
-        public static void testCardinalityMT(finiteBag u) {
+    public finiteBag<D> randTree(int n) {
+        finiteBag randTree = new SBBT_MT();
+        for (int i = 0; i < n; i++) {
+            randTree = randTree.add(Utility.randInt(0, 50));
+        }
+        return randTree;
+    }
+
+    public static void testCardinalityMT(finiteBag u) throws Exception {
         // first check that it's empty. 
         if (u.isEmptyHuh()) {
-        
             if (u.cardinality() != 0) {
-                
-                System.out.println("Failure! Cardinality for empty set is: " + u.cardinality()
+                throw new Exception("Failure! Cardinality for empty set is: " + u.cardinality()
                         + ", should be: 0");
+
             }
-        } 
+        }
     }
+    
 
     public static void main(String[] args) {
         // TODO code application logic here
         System.out.println("------------------------------------------------------------");
         System.out.println("TESTING EMPTY . . . ");
-        testCardinalityMT(mt);
+        //testCardinalityMT(mt);
     }
-    
-    
+
 }

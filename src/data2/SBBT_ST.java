@@ -29,9 +29,9 @@ public class SBBT_ST<D extends Comparable> implements finiteBag<D> {
         this.right = right;
         this.count = count;
     }
-    
-    public SBBT_ST(finiteBag left, D here, finiteBag right, int count, boolean isBlack){
-        
+
+    public SBBT_ST(finiteBag left, D here, finiteBag right, int count, boolean isBlack) {
+
     }
 
     public int getCount(D elt) {
@@ -85,7 +85,7 @@ public class SBBT_ST<D extends Comparable> implements finiteBag<D> {
         //figure out a way of calculating max amount of elt in multiset.
         int max = Math.max(0, this.getCount(elt) - n);
         //returns the larger of a and b. 
-        
+
         //if this.getCount(elt)-n is equal to 0, then finiteBag will remove 0
         //http://www.tutorialspoint.com/java/lang/math_max_int.htm
         if (elt.equals(this.here)) {
@@ -99,11 +99,11 @@ public class SBBT_ST<D extends Comparable> implements finiteBag<D> {
     }
 
     public finiteBag removeAll(D elt) {
-      
-        if (elt.equals(this.here)){
+
+        if (elt.equals(this.here)) {
             return new SBBT_ST(this.left, this.here, this.right, 0);
             //take the union of the left and right trees to put them together
-        } else if (elt.compareTo(this.here) < 0 ) {
+        } else if (elt.compareTo(this.here) < 0) {
             return new SBBT_ST(this.left.removeAll(elt), this.here, this.right, this.getCount(elt));
         } else {
             return new SBBT_ST(this.left, this.here, this.right.removeAll(elt), this.getCount(elt));
@@ -129,21 +129,52 @@ public class SBBT_ST<D extends Comparable> implements finiteBag<D> {
     }
     //have to figure out smart insert. 
 
-
     public finiteBag blacken() {
         return new SBBT_ST(this.left, this.here, this.right, this.count, true);
     }
-    
-    public boolean isBlackHuh(){
+
+    public boolean isBlackHuh() {
         return isBlack;
     }
-    
+
     public finiteBag balance() {
-        if ((this.isBlackHuh() && this.left.isBlackHuh() && this.left.left.isBlacHuh())) {
-        //error here because i can't get the left of left. 
-            return new SBBT_ST(STUFF IN HERE);
+        if ((this.isBlackHuh() && (this.left instanceof SBBT_ST) && !((SBBT_ST) this.left).isBlackHuh()
+                && !((SBBT_ST) this.left).left.isBlackHuh())) {
+            //cast it so compiler knows it's SBBT_ST
+            //error here because i can't get the left of left. 
+
+
+            //hahahahaha wowow this is complicated. 
+            return new SBBT_ST(return new SBBT_ST(( (SBBT_ST) this.left).left) , (SBBT_ST)this.left).here, this.right, this.count, this.isBlack()));
+            
+            //this return statement is a filler
+            //return new SBBT_ST(this.left, this.here, this.right, this.count, this.isBlack);
+
+        } else if ((this.isBlackHuh() && (this.left instanceof SBBT_ST) && !((SBBT_ST) this.left).isBlackHuh()
+                && !((SBBT_ST) this.left).right.isBlackHuh())) {
+            
+            //this return statement is a filler
+            
+            
+            return new SBBT_ST(this.left, this.here, this.right, this.count, this.isBlack);
+        
+        } else if ((this.isBlackHuh() && (this.right instanceof SBBT_ST) && !((SBBT_ST) this.right).isBlackHuh()
+                && !((SBBT_ST) this.right).left.isBlackHuh())) {
+            
+
+            //this return statement is a filler
+            return new SBBT_ST(this.left, this.here, this.right, this.count, this.isBlack);
+        } else if ((this.isBlackHuh() && (this.right instanceof SBBT_ST) && !((SBBT_ST) this.right).isBlackHuh()
+                && !((SBBT_ST) this.right).right.isBlackHuh())) {
+            
+            //this return statement is a filler
+             return new SBBT_ST(this.left, this.here, this.right, this.count, this.isBlack);
+        } else {
+            return this;
         }
+
     }
+
     public finiteBag union(finiteBag u) {
         // because this is a multiset with multiplicity,
         // items can repeat! so union can just be both sets
