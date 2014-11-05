@@ -26,11 +26,11 @@ public class SBBT_MT<D extends Comparable> implements finiteBag<D> {
         return isBlack;
     }
 
-    public finiteBag blacken() {
+    public finiteBag<D> blacken() {
         return new SBBT_MT();
     }
 
-    public finiteBag balance() {
+    public finiteBag<D> balance() {
         return this;
     }
 
@@ -57,39 +57,39 @@ public class SBBT_MT<D extends Comparable> implements finiteBag<D> {
     }
 
     // (remove t elt) --> finite-bag where t is a finite-bag and elt is an int
-    public finiteBag remove(D elt) {
-        return empty();
+    public finiteBag<D> remove(D elt) {
+        return this;
     }
 
-    public finiteBag removeN(D elt, int n) {
-        return this.remove(elt);
+    public finiteBag<D> remove(D elt, int n) {
+        return this;
     }
 
-    public finiteBag removeAll(D elt) {
-        return this.remove(elt);
+    public finiteBag<D> removeAll(D elt) {
+        return this;
     }
 
-    public finiteBag add(D elt) {
+    public finiteBag<D> add(D elt) {
         return new SBBT_ST(empty(), elt, empty(), 1, false);
     }
     // (add t elt) --> finite-set where t is a finite-set and elt is an ent
 
-    public finiteBag addN(D elt, int n) {
+    public finiteBag<D> add(D elt, int n) {
         for (int i = 0; i <= n; i++) {
             this.add(elt);
         }
         return this;
     }
 
-    public finiteBag union(finiteBag u) {
+    public finiteBag<D> union(finiteBag u) {
         return u;
     }
 
-    public finiteBag inter(finiteBag u) {
-        return empty();
+    public finiteBag<D> inter(finiteBag u) {
+        return this;
     }
 
-    public finiteBag diff(finiteBag u) {
+    public finiteBag<D> diff(finiteBag u) {
         return u;
     }
 
@@ -106,6 +106,26 @@ public class SBBT_MT<D extends Comparable> implements finiteBag<D> {
 
     @Override
     public Sequence<D> seq() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+
+    public finiteBag<D> insert(D elt, int count) {
+       return this.insertInner(elt, count).blacken();
+    }
+
+
+    public finiteBag<D> insertInner(D elt, int count) {
+        return new SBBT_ST(elt, count);
+    }
+
+    @Override
+    public int sumIt() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public int sumItS(Sequence<D> as) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 

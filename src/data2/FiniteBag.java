@@ -28,33 +28,36 @@ interface finiteBag<D extends Comparable> extends Sequenced<D> { //this is going
     public boolean member(D elt);
 
     // (remove t elt) --> finite-bag where t is a finite-bag and elt is an int
-    public finiteBag remove(D elt);
+    public finiteBag<D> remove(D elt);
 
-    public finiteBag removeN(D elt, int n);
+    public finiteBag<D> remove(D elt, int n);
 
-    public finiteBag removeAll(D elt);
+    public finiteBag<D> removeAll(D elt);
 
-    public finiteBag add(D elt);
+    public finiteBag<D> add(D elt);
 
-    public finiteBag addN(D elt, int n);
+    public finiteBag<D> add(D elt, int n);
 
-    public finiteBag blacken();
+    public finiteBag<D> blacken();
 
     public boolean isBlackHuh();
 
-//    public finiteBag balance();
-    // (add t elt) --> finite-set where t is a finite-set and elt is an ent
+
     public boolean equal(finiteBag u);
 
     public boolean subset(finiteBag u);
 
-    public finiteBag union(finiteBag u);
+    public finiteBag<D> union(finiteBag u);
 
-    public finiteBag inter(finiteBag u);
+    public finiteBag<D> inter(finiteBag u);
 
-    public finiteBag diff(finiteBag u);
+    public finiteBag<D> diff(finiteBag u);
     
+    public finiteBag<D> insert(D elt, int count);
+    public finiteBag<D> insertInner(D elt, int count);
     public Sequence<D> seq();
+    public int sumIt();
+    public int sumItS(Sequence<D> as);
 
     //replacing multiplicity with getCount 
 }
