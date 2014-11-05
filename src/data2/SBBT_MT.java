@@ -10,7 +10,7 @@ package data2;
  * @author ldbruby95
  */
 //empty self-balancing binary tree
-public class SBBT_MT<D extends Comparable> implements finiteBag<D> {
+public class SBBT_MT<D extends Comparable> implements FiniteBag<D> {
 
     boolean isBlack;
 
@@ -26,11 +26,11 @@ public class SBBT_MT<D extends Comparable> implements finiteBag<D> {
         return isBlack;
     }
 
-    public finiteBag<D> blacken() {
+    public FiniteBag<D> blacken() {
         return new SBBT_MT();
     }
 
-    public finiteBag<D> balance() {
+    public FiniteBag<D> balance() {
         return this;
     }
 
@@ -38,7 +38,7 @@ public class SBBT_MT<D extends Comparable> implements finiteBag<D> {
         return 0;
     }
 
-    public static finiteBag empty() {
+    public static FiniteBag empty() {
         return new SBBT_MT();
     }
 
@@ -57,49 +57,49 @@ public class SBBT_MT<D extends Comparable> implements finiteBag<D> {
     }
 
     // (remove t elt) --> finite-bag where t is a finite-bag and elt is an int
-    public finiteBag<D> remove(D elt) {
+    public FiniteBag<D> remove(D elt) {
         return this;
     }
 
-    public finiteBag<D> remove(D elt, int n) {
+    public FiniteBag<D> remove(D elt, int n) {
         return this;
     }
 
-    public finiteBag<D> removeAll(D elt) {
+    public FiniteBag<D> removeAll(D elt) {
         return this;
     }
 
-    public finiteBag<D> add(D elt) {
+    public FiniteBag<D> add(D elt) {
         return new SBBT_ST(empty(), elt, empty(), 1, false);
     }
     // (add t elt) --> finite-set where t is a finite-set and elt is an ent
 
-    public finiteBag<D> add(D elt, int n) {
+    public FiniteBag<D> add(D elt, int n) {
         for (int i = 0; i <= n; i++) {
             this.add(elt);
         }
         return this;
     }
 
-    public finiteBag<D> union(finiteBag u) {
+    public FiniteBag<D> union(FiniteBag u) {
         return u;
     }
 
-    public finiteBag<D> inter(finiteBag u) {
+    public FiniteBag<D> inter(FiniteBag u) {
         return this;
     }
 
-    public finiteBag<D> diff(finiteBag u) {
+    public FiniteBag<D> diff(FiniteBag u) {
         return u;
     }
 
-    public boolean equal(finiteBag u) {
+    public boolean equal(FiniteBag u) {
         return u.isEmptyHuh();
-        // only will be equal if finiteBag in question
+        // only will be equal if FiniteBag in question
         // is also empty. 
     }
 
-    public boolean subset(finiteBag u) {
+    public boolean subset(FiniteBag u) {
         return true;
         //empty set is a subset of all sets
     }
@@ -110,23 +110,23 @@ public class SBBT_MT<D extends Comparable> implements finiteBag<D> {
     }
 
 
-    public finiteBag<D> insert(D elt, int count) {
+    public FiniteBag<D> insert(D elt, int count) {
        return this.insertInner(elt, count).blacken();
     }
 
 
-    public finiteBag<D> insertInner(D elt, int count) {
+    public FiniteBag<D> insertInner(D elt, int count) {
         return new SBBT_ST(elt, count);
     }
 
-    @Override
+  
     public int sumIt() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return sumItS(this.seq());
     }
 
-    @Override
+
     public int sumItS(Sequence<D> as) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return 0;
     }
 
 }

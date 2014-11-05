@@ -13,16 +13,40 @@ package data2;
 public class SequenceCat<D extends Comparable> implements Sequence<D> {
     Sequence<D> left;
     Sequence<D> right;
+    
+    public SequenceCat(Sequence<D> left, Sequence<D> right) {
+        this.left = left;
+        this.right = right;
+    }
 
-    hasnext 
-    this.left.hasnext or this.right.has next
-                    
-                    
-                    here if this.left.hasnext , return this.left.here
-                            else return this.right.here
+    public boolean hasNext() {
+        return this.left.hasNext() || this.right.hasNext();
+    }
+
+    public D here() {
+        if (this.left.hasNext()){
+            return this.left.here();
+        } else {
+            return this.left.here();
+        }
+    }
+   
+                                        
                                     
-                                    
-     next
-                                    if left has next, return new cat sequence left.next, right.next
+     public Sequence<D> next() {
+         if (this.left.hasNext()) {
+             return new SequenceCat(this.left.next(), this.right);
+         } else {
+             return this.right.next();
+         }
+     }
+     
+     public String sequence2String() {
+         return this.left.sequence2String() + " " + this.right.sequence2String();
+     }
+     
+     public Sequence<D> seq() {
+         return this;
+     }
                                     
 }

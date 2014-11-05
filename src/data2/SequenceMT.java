@@ -13,6 +13,13 @@ import java.util.*;
  */
 public class SequenceMT<D extends Comparable> implements Sequence<D> {
 
+    public void SequenceMT() {
+    }
+
+    public Sequence<D> seq() {
+        return this;
+    }
+
     public boolean hasNext() {
         return false;
     }
@@ -25,6 +32,8 @@ public class SequenceMT<D extends Comparable> implements Sequence<D> {
         return this;
     }
 
-    //something in here
-    //bloop bloop
+    public String sequence2String() {
+        return " ";
+    }
+
 }

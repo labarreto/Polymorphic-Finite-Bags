@@ -9,12 +9,12 @@ package data2;
  *
  * @author ldbruby95
  */
-public class SequenceNMT<D extends Comparable> implements Sequence<D> {
+public class SequenceST<D extends Comparable> implements Sequence<D>, Sequenced<D> {
 D here;
 int count;
 Sequence<D> next;
 
-public SequenceNMT(D here, int count, Sequence<D> next) {
+public SequenceST(D here, int count, Sequence<D> next) {
     this.here = here;
     this.count = count;
     this.next = next;
@@ -29,12 +29,18 @@ public SequenceNMT(D here, int count, Sequence<D> next) {
         return this.here;
     }
 
-    public SequenceMT<D> next() {
+    public Sequence<D> next() {
         if (count > 1) {
-            return new SequenceNMT()
+            return new SequenceST(here, count-1, next);
+        } else {
+            return next;
         }
     }
     public Sequence<D> seq() {
         return this;
+    }
+    
+    public String sequence2String() {
+        return " " + this.here;
     }
 }

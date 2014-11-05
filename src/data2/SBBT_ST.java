@@ -12,25 +12,25 @@ import java.util.*;
  * @author ldbruby95
  */
 //self balancing binary tree with STuff in it.
-public class SBBT_ST<D extends Comparable> implements finiteBag<D> {
+public class SBBT_ST<D extends Comparable> implements FiniteBag<D> {
 
     SBBT_ST() {
     }
 
-    finiteBag left;
+    FiniteBag left;
     D here;
-    finiteBag right;
+    FiniteBag right;
     int count;
     boolean isBlack;
 
-    public SBBT_ST(finiteBag left, D here, finiteBag right, int count) {
+    public SBBT_ST(FiniteBag left, D here, FiniteBag right, int count) {
         this.left = left;
         this.here = here;
         this.right = right;
         this.count = count;
     }
 
-    public SBBT_ST(finiteBag left, D here, finiteBag right, int count, boolean isBlack) {
+    public SBBT_ST(FiniteBag left, D here, FiniteBag right, int count, boolean isBlack) {
         this.left = left;
         this.here = here;
         this.right = right;
@@ -88,17 +88,17 @@ public class SBBT_ST<D extends Comparable> implements finiteBag<D> {
     }
 
     // (remove t elt) --> finite-bag where t is a finite-bag and elt is an int
-    public finiteBag<D> remove(D elt) {
+    public FiniteBag<D> remove(D elt) {
         return this.remove(elt, 1);
 
     }
 
-    public finiteBag<D> remove(D elt, int n) {
+    public FiniteBag<D> remove(D elt, int n) {
         //figure out a way of calculating max amount of elt in multiset.
         int max = Math.max(0, this.getCount(elt) - n);
         //returns the larger of a and b. 
 
-        //if this.getCount(elt)-n is equal to 0, then finiteBag will remove 0
+        //if this.getCount(elt)-n is equal to 0, then FiniteBag will remove 0
         //http://www.tutorialspoint.com/java/lang/math_max_int.htm
         if (elt.compareTo(this.here) == 0) {
             //returning count - n elements
@@ -110,7 +110,7 @@ public class SBBT_ST<D extends Comparable> implements finiteBag<D> {
         }
     }
 
-    public finiteBag<D> removeAll(D elt) {
+    public FiniteBag<D> removeAll(D elt) {
 
         if (elt.compareTo(this.here) == 0) {
             return new SBBT_ST(this.left, this.here, this.right, 0);
@@ -122,11 +122,11 @@ public class SBBT_ST<D extends Comparable> implements finiteBag<D> {
         }
     }
 
-    public finiteBag<D> add(D elt) {
+    public FiniteBag<D> add(D elt) {
         return this.add(elt, 1);
     }
 
-    public finiteBag<D> add(D elt, int n) {
+    public FiniteBag<D> add(D elt, int n) {
         if (elt.compareTo(this.here) == 0) {
             return new SBBT_ST(this.left, this.here, this.right, this.count + n, this.isBlack);
         } else if (elt.compareTo(this.here) < 0) {
@@ -138,7 +138,7 @@ public class SBBT_ST<D extends Comparable> implements finiteBag<D> {
 
     }
 
-    public finiteBag blacken() {
+    public FiniteBag blacken() {
         return new SBBT_ST(this.left, this.here, this.right, this.count, true);
     }
 
@@ -146,7 +146,7 @@ public class SBBT_ST<D extends Comparable> implements finiteBag<D> {
         return isBlack;
     }
 
-    public finiteBag balance() {
+    public FiniteBag balance() {
         SBBT_ST lefty;
         SBBT_ST leftyleft;
         SBBT_ST leftyright;
@@ -217,11 +217,11 @@ public class SBBT_ST<D extends Comparable> implements finiteBag<D> {
 
     }
 
-    public finiteBag<D> union(finiteBag u) {
+    public FiniteBag<D> union(FiniteBag u) {
         return left.union(right.union(u)).add(here, this.getCount(here));
     }
 
-    public finiteBag inter(finiteBag u) {
+    public FiniteBag inter(FiniteBag u) {
         if (u.member(this.here)) {
             int min = Math.min(u.getCount(here), this.getCount(here));
             return new SBBT_ST(this.left.inter(u), this.here, this.right.inter(u), min);
@@ -231,18 +231,18 @@ public class SBBT_ST<D extends Comparable> implements finiteBag<D> {
 
     }
 
-    public finiteBag<D> diff(finiteBag u) {
+    public FiniteBag<D> diff(FiniteBag u) {
         FiniteBag removedST = u.remove(here, this.getCount(here));
         return left.union(right).diff(removedST);
     }
 
-    public boolean equal(finiteBag u) {
+    public boolean equal(FiniteBag u) {
         return (this.subset(u) && u.subset(this));
         //
     }
 
-    public boolean subset(finiteBag u) {
-        //elements in this are in finiteBag. we can find this using count
+    public boolean subset(FiniteBag u) {
+        //elements in this are in FiniteBag. we can find this using count
         //since there would have to be at least 1 item in this that is in u
         //for left, right, and here. 
         //
@@ -251,11 +251,11 @@ public class SBBT_ST<D extends Comparable> implements finiteBag<D> {
 
     }
 
-    public finiteBag<D> insert(D elt, int count) {
+    public FiniteBag<D> insert(D elt, int count) {
         return this.insertInner(elt, count).blacken();
     }
 
-    public finiteBag<D> insertInner(D elt, int count) {
+    public FiniteBag<D> insertInner(D elt, int count) {
         if (elt.compareTo(this.here) == 0) {
             return new SBBT_ST(this.left, this.here, this.right, this.count + count, this.isBlack);
         } else if (elt.compareTo(this.here) < 0) {
@@ -265,21 +265,22 @@ public class SBBT_ST<D extends Comparable> implements finiteBag<D> {
         }
     }
 
-    @Override
     public Sequence<D> seq() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+       return new SequenceST(here, count, (new SequenceCat(left.seq(), right.seq())));
     }
 
 
-
-    @Override
     public int sumIt() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+       return sumItS(this.seq());
     }
 
-    @Override
+
     public int sumItS(Sequence<D> as) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+       int sum = 0;
+       while (as.hasNext()) {
+           sum = sum + 1;
+           as = as.next();
+       } return sum;
     }
 
 }

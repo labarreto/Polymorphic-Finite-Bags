@@ -12,22 +12,22 @@ package data2;
 public class TestTest<D extends Comparable> {
 
     static int count;
-    static finiteBag mt = new SBBT_MT();
+    static FiniteBag mt = new SBBT_MT();
     Randomness rand;
 
     TestTest(Randomness<D> rand) {
         this.rand = rand;
     }
 
-    public finiteBag<D> randTree(int n) {
-        finiteBag randTree = new SBBT_MT();
+    public FiniteBag<D> randTree(int n) {
+        FiniteBag randTree = new SBBT_MT();
         for (int i = 0; i < n; i++) {
             randTree = randTree.add(Utility.randInt(0, 50));
         }
         return randTree;
     }
 
-    public static void testCardinalityMT(finiteBag u) throws Exception {
+    public static void testCardinalityMT(FiniteBag u) throws Exception {
         // first check that it's empty. 
         if (u.isEmptyHuh()) {
             if (u.cardinality() != 0) {
