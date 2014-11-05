@@ -57,8 +57,9 @@ public class TestTest<D extends Comparable> {
             } else {
                 int length = Utility.randInt(1, 150);
                 FiniteBag r = randTree(length);
-                if (r.isEmptyHuh()) {
-                    throw new Exception("Failure! Non MT finite set is empty");
+                if (r.isEmptyHuh() && count != 0) {
+                    throw new Exception("Failure! Non MT finite set is empty. length is : " + length +
+                            ", and r Tree is: " + r );
                 }
             }
             MTtest++;

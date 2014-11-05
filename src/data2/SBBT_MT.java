@@ -71,16 +71,19 @@ public class SBBT_MT<D extends Comparable> implements FiniteBag<D> {
     }
 
     public FiniteBag<D> add(D elt) {
-        return new SBBT_ST(empty(), elt, empty(), 1, false);
+        return add(elt, 1);
     }
     // (add t elt) --> finite-set where t is a finite-set and elt is an ent
 
     public FiniteBag<D> add(D elt, int n) {
-        for (int i = 0; i <= n; i++) {
-            this.add(elt);
-        }
-        return this;
+        return new SBBT_ST(empty(), elt, empty(), n, false);
     }
+    
+        
+    public String toString() {
+        return "()";
+    }
+
 
     public FiniteBag<D> union(FiniteBag u) {
         return u;

@@ -37,14 +37,14 @@ public class SBBT_ST<D extends Comparable> implements FiniteBag<D> {
         this.count = count;
         this.isBlack = isBlack;
     }
-    
+
     public SBBT_ST(D here) {
         this.here = here;
         this.count = 1;
         this.left = new SBBT_MT();
         this.right = new SBBT_MT();
     }
-    
+
     public SBBT_ST(D here, int count) {
         this.here = here;
         this.count = count;
@@ -72,11 +72,20 @@ public class SBBT_ST<D extends Comparable> implements FiniteBag<D> {
 
     // (isEmptyHuh t) --> boolean where t is a finite bag
     public boolean isEmptyHuh() {
-        return false;
+        if (this.getCount(here) == 0) {
+            if (!left.isEmptyHuh()) {
+                return false;
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
     }
 
-    // (member t elt) --> boolean where t is a finite-bag and elt is an int
-    public boolean member(D elt) {
+
+// (member t elt) --> boolean where t is a finite-bag and elt is an int
+public boolean member(D elt) {
         //compareTo part of comparable
         if (elt.compareTo(this.here) == 0) {
             return this.count > 0;
@@ -91,6 +100,10 @@ public class SBBT_ST<D extends Comparable> implements FiniteBag<D> {
     public FiniteBag<D> remove(D elt) {
         return this.remove(elt, 1);
 
+    }
+    
+    public String toString() {
+        return "( " + left + " " + right + ")";
     }
 
     public FiniteBag<D> remove(D elt, int n) {
@@ -131,7 +144,6 @@ public class SBBT_ST<D extends Comparable> implements FiniteBag<D> {
             return new SBBT_ST(this.left, this.here, this.right, this.count + n, this.isBlack);
         } else if (elt.compareTo(this.here) < 0) {
             return new SBBT_ST(this.left.add(elt, n), this.here, this.right, this.count, this.isBlack);
-
         } else {
             return new SBBT_ST(this.left, this.here, this.right.add(elt, n), this.count, this.isBlack);
         }
