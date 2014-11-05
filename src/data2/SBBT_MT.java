@@ -104,4 +104,9 @@ public class SBBT_MT<D extends Comparable> implements finiteBag<D> {
         //empty set is a subset of all sets
     }
 
+    @Override
+    public Sequence<D> seq() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
 }

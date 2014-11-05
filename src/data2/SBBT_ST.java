@@ -138,37 +138,70 @@ public class SBBT_ST<D extends Comparable> implements finiteBag<D> {
     }
 
     public finiteBag balance() {
+        SBBT_ST lefty;
+        SBBT_ST leftyleft;
+        SBBT_ST leftyright;
+        SBBT_ST righty;
+        SBBT_ST rightyleft;
+        SBBT_ST rightyright;
+
         if ((this.isBlackHuh() && (this.left instanceof SBBT_ST) && !((SBBT_ST) this.left).isBlackHuh()
                 && !((SBBT_ST) this.left).left.isBlackHuh())) {
             //cast it so compiler knows it's SBBT_ST
             //error here because i can't get the left of left. 
 
-
+            lefty = ((SBBT_ST) this.left);
+            leftyleft = ((SBBT_ST) lefty.left);
             //hahahahaha wowow this is complicated. 
-            return new SBBT_ST(return new SBBT_ST(((SBBT_ST) this.left).left) , (SBBT_ST)this.left).here, this.right, this.count, this.isBlack()));
-            
+            return new SBBT_ST(
+                    /* left */new SBBT_ST(leftyleft.left, leftyleft.here, leftyleft.right, leftyleft.count, true),
+                    /* here */ lefty.here,
+                    /* right */ new SBBT_ST(leftyleft.right, this.here, this.right, this.count, true),
+                    /* count */ lefty.count,
+                    /* isBlack */ false);
+
             //this return statement is a filler
             //return new SBBT_ST(this.left, this.here, this.right, this.count, this.isBlack);
-
         } else if ((this.isBlackHuh() && (this.left instanceof SBBT_ST) && !((SBBT_ST) this.left).isBlackHuh()
                 && !((SBBT_ST) this.left).right.isBlackHuh())) {
-            
-            //this return statement is a filler
-            
-            
-            return new SBBT_ST(this.left, this.here, this.right, this.count, this.isBlack);
-        
+
+            lefty = ((SBBT_ST) this.left);
+            leftyleft = ((SBBT_ST) lefty.left);
+            leftyright = ((SBBT_ST) lefty.right);
+            //hahahahaha wowow this is complicated. 
+            return new SBBT_ST(
+                    /* left */new SBBT_ST(leftyleft, lefty.here, leftyright.left, lefty.count, true),
+                    /* here */ leftyright.here,
+                    /* right */ new SBBT_ST(leftyright.right, this.here, this.right, this.count, true),
+                    /* count */ leftyright.count,
+                    /* isBlack */ false);
+
         } else if ((this.isBlackHuh() && (this.right instanceof SBBT_ST) && !((SBBT_ST) this.right).isBlackHuh()
                 && !((SBBT_ST) this.right).left.isBlackHuh())) {
-            
 
-            //this return statement is a filler
-            return new SBBT_ST(this.left, this.here, this.right, this.count, this.isBlack);
+            righty = ((SBBT_ST) this.right);
+            rightyleft = ((SBBT_ST) righty.left);
+
+            return new SBBT_ST(
+                    /* left */new SBBT_ST(this.left, this.here, rightyleft.left, this.count, true),
+                    /* here */ rightyleft.here,
+                    /* right */ new SBBT_ST(rightyleft.right, righty.here, righty.right, righty.count, true),
+                    /* count */ rightyleft.count,
+                    /* isBlack */ false);
+
         } else if ((this.isBlackHuh() && (this.right instanceof SBBT_ST) && !((SBBT_ST) this.right).isBlackHuh()
                 && !((SBBT_ST) this.right).right.isBlackHuh())) {
-            
-            //this return statement is a filler
-             return new SBBT_ST(this.left, this.here, this.right, this.count, this.isBlack);
+
+            righty = ((SBBT_ST) this.right);
+            rightyright = ((SBBT_ST) righty.right);
+            rightyleft = ((SBBT_ST) righty.left);
+
+            return new SBBT_ST(
+                    /* left */new SBBT_ST(this.left, this.here, rightyleft, this.count, true),
+                    /* here */ righty.here,
+                    /* right */ new SBBT_ST(rightyright.left, rightyright.here, rightyright.right, rightyright.count, true),
+                    /* count */righty.count,
+                    /* isBlack */ false);
         } else {
             return this;
         }
@@ -213,6 +246,11 @@ public class SBBT_ST<D extends Comparable> implements finiteBag<D> {
         return (u.getCount(here) >= this.getCount(here)
                 && this.left.subset(u) && this.right.subset(u));
 
+    }
+
+    @Override
+    public Sequence<D> seq() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
 }
