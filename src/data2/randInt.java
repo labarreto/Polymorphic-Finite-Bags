@@ -15,9 +15,9 @@ public class randInt implements Randomness<Integer> {
 
     public Integer createRand() {
         Random rand = new Random();
-        int max = 0;
-        int min = 100;
-        int randomNum = rand.nextInt((max - min) + 1) + min;
-        return randomNum;
+        int max = 100;
+        int min = 0;
+        return rand.nextInt((max - min) + 1) + min;
+        
     }
 }

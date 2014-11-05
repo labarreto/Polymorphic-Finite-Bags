@@ -48,6 +48,7 @@ public class SBBT_MT<D extends Comparable> implements FiniteBag<D> {
 
     // (isEmptyHuh t) --> boolean where t is a finite bag
     public boolean isEmptyHuh() {
+        
         return true;
     }
 
@@ -104,9 +105,9 @@ public class SBBT_MT<D extends Comparable> implements FiniteBag<D> {
         //empty set is a subset of all sets
     }
 
-    @Override
+    
     public Sequence<D> seq() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return new SequenceMT();
     }
 
 
