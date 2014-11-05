@@ -35,7 +35,7 @@ public class SBBT_ST<D extends Comparable> implements finiteBag<D> {
     }
 
     public int getCount(D elt) {
-        if (elt.equals(this.here)) {
+        if (elt.compareTo(this.here) == 0) {
             return count;
         } else {
             if (elt.compareTo(here) < 0) {
@@ -60,7 +60,7 @@ public class SBBT_ST<D extends Comparable> implements finiteBag<D> {
     public boolean member(D elt) {
         //compareTo part of comparable
         if (elt.compareTo(this.here) == 0) {
-            return true;
+            return this.count > 0;
         } else if (elt.compareTo(this.here) < 0) {
             return left.member(elt);
         } else {
@@ -69,65 +69,57 @@ public class SBBT_ST<D extends Comparable> implements finiteBag<D> {
     }
 
     // (remove t elt) --> finite-bag where t is a finite-bag and elt is an int
-    public finiteBag remove(D elt) {
-        if (elt.equals(this.here)) {
-            //there's a way to do this without a nested if. 
-            return new SBBT_ST(this.left, this.here, this.right, this.count - 1);
-        } else if (elt.compareTo(here) < 0) {
-            return new SBBT_ST(this.left.remove(elt), this.here, this.right, this.count);
-        } else {
-            return new SBBT_ST(this.left, this.here, this.right.remove(elt), this.count);
-        }
+    public finiteBag<D> remove(D elt) {
+        return this.removeN(elt, 1);
 
     }
 
-    public finiteBag removeN(D elt, int n) {
+    public finiteBag<D> removeN(D elt, int n) {
         //figure out a way of calculating max amount of elt in multiset.
         int max = Math.max(0, this.getCount(elt) - n);
         //returns the larger of a and b. 
 
         //if this.getCount(elt)-n is equal to 0, then finiteBag will remove 0
         //http://www.tutorialspoint.com/java/lang/math_max_int.htm
-        if (elt.equals(this.here)) {
+        if (elt.compareTo(this.here) == 0) {
             //returning count - n elements
             return new SBBT_ST(this.left, this.here, this.right, max);
         } else if (elt.compareTo(this.here) < 0) {
-            return new SBBT_ST(this.left.removeN(elt, n), this.here, this.right, this.getCount(elt));
+            return new SBBT_ST(this.left.removeN(elt, n), this.here, this.right, this.count);
         } else {
-            return new SBBT_ST(this.left, this.here, this.right.removeN(elt, n), this.getCount(elt));
+            return new SBBT_ST(this.left, this.here, this.right.removeN(elt, n), this.count);
         }
     }
 
-    public finiteBag removeAll(D elt) {
+    public finiteBag<D> removeAll(D elt) {
 
-        if (elt.equals(this.here)) {
+        if (elt.compareTo(this.here) == 0) {
             return new SBBT_ST(this.left, this.here, this.right, 0);
             //take the union of the left and right trees to put them together
         } else if (elt.compareTo(this.here) < 0) {
-            return new SBBT_ST(this.left.removeAll(elt), this.here, this.right, this.getCount(elt));
+            return new SBBT_ST(this.left.removeAll(elt), this.here, this.right, this.count);
         } else {
-            return new SBBT_ST(this.left, this.here, this.right.removeAll(elt), this.getCount(elt));
+            return new SBBT_ST(this.left, this.here, this.right.removeAll(elt), this.count);
         }
     }
 
-    public finiteBag add(D elt) {
-        //haha jk, this isn't efficient.
+    public finiteBag<D> add(D elt) {
+        return this.addN(elt, 1);
+    }
 
+    public finiteBag<D> addN(D elt, int n) {
         if (elt.compareTo(this.here) == 0) {
-            return this;
-        } else if (elt.compareTo(this.here) > 0) {
-            return new SBBT_ST(this.left, this.here, this.right.add(elt), this.count);
+            return new SBBT_ST(this.left, this.here, this.right, this.count + n, this.isBlack);
+        } else if (elt.compareTo(this.here) <0 ){
+            return new SBBT_ST(this.left.addN(elt, n), this.here, this.right, this.count, this.isBlack);
+            
         } else {
-            return new SBBT_ST(this.left.add(elt), this.here, this.right, this.count);
+            return new SBBT_ST(this.left, this.here, this.right.addN(elt, n), this.count, this.isBlack);
         }
+            
     }
 
-    // (add t elt) --> finite-set where t is a finite-set and elt is an ent
-    public finiteBag addN(D elt, int n) {
-        //haha jk, this isn't efficient. 
-        return this;
-    }
-    //have to figure out smart insert. 
+
 
     public finiteBag blacken() {
         return new SBBT_ST(this.left, this.here, this.right, this.count, true);
@@ -208,29 +200,23 @@ public class SBBT_ST<D extends Comparable> implements finiteBag<D> {
 
     }
 
-    public finiteBag union(finiteBag u) {
-        // because this is a multiset with multiplicity,
-        // items can repeat! so union can just be both sets
-        return u;
-        //gotta figure out how to do this. 
-
-        //will use new smart insert
+    public finiteBag<D> union(finiteBag u) {
+       return left.union(right.union(u)).addN(here, this.getCount(here));
     }
 
     public finiteBag inter(finiteBag u) {
-        return u;
-        // will use union to join the common elements of 
-        //left of u and this, and right of u and this.
-        //union uses smart insert, so I cannot write this yet. 
-
-        //my ideas are that if here is a member of u, and if count of u for here
-        //is more than count of u for this, 
-        //then return a new set where you find intersection of left and u left,
-        //and intersection of right and u, and return count of this.here
+        if (u.member(this.here)) {
+            int min = Math.min(u.getCount(here), this.getCount(here));
+            return new SBBT_ST(this.left.inter(u), this.here, this.right.inter(u), min);
+        } else {
+            return this.left.inter(u).union(this.right.inter(u));
+        }
+ 
     }
 
-    public finiteBag diff(finiteBag u) {
-        return u; //this is wrong. 
+    public finiteBag<D> diff(finiteBag u) {
+        FiniteBag removedST = u.removeN(here, this.getCount(here));
+        return left.union(right).diff(removedST);
     }
 
     public boolean equal(finiteBag u) {
@@ -249,7 +235,7 @@ public class SBBT_ST<D extends Comparable> implements finiteBag<D> {
     }
 
     @Override
-    public Sequence<D> seq() {
+        public Sequence<D> seq() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
