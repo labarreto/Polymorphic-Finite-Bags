@@ -19,9 +19,12 @@ public class TestTest<D extends Comparable> {
 
     //test variables
     static int MTtest = 0;
+    static int MTUniontest = 0;
+    static int MTIntertest = 0;
     static int CardMTtest = 0;
     static int CardAddtest = 0;
     static int CardRemovetest = 0;
+    static int MemberDifftest = 0;
 
     TestTest(Randomness<D> rand) {
         this.rand = rand;
@@ -48,7 +51,7 @@ public class TestTest<D extends Comparable> {
 
     /*                    testing empty                       */
     public void testIsEmptyHuhMT(int count) throws Exception {
-        for (int i = 0; i < 1000; i++) { // run 100 tests
+        for (int i = 0; i < 5000; i++) { // run 100 tests
             if (count == 0) {
                 FiniteBag mt = MT();
                 if (!mt.isEmptyHuh()) {
@@ -58,18 +61,40 @@ public class TestTest<D extends Comparable> {
                 int length = Utility.randInt(1, 150);
                 FiniteBag r = randTree(length);
                 if (r.isEmptyHuh() && count != 0) {
-                    throw new Exception("Failure! Non MT finite set is empty. length is : " + length +
-                            ", and r Tree is: " + r );
+                    throw new Exception("Failure! Non MT finite set is empty. length is : " + length
+                            + ", and r Tree is: " + r);
                 }
             }
             MTtest++;
         }
     }
 
+    public void testEmptyUnion() throws Exception {
+        for (int i = 0; i < 5000; i++) {
+            int length = Utility.randInt(0, 15);
+            FiniteBag r = randTree(length);
+            if (!r.union(MT()).equal(r)) {
+                throw new Exception("Failure! Union of random tree and empty is not the random tree");
+            }
+            MTUniontest++;
+        }
+    }
+
+    public void testEmptyInter() throws Exception {
+        for (int i = 0; i < 5000; i++) {
+            int length = Utility.randInt(0, 15);
+            FiniteBag r = randTree(length);
+            if (!r.inter(MT()).equal(MT())) {
+                throw new Exception("Failure! Intersection of random tree and empty is not empty");
+            }
+            MTIntertest++;
+        }
+    }
+
     /*                    testing cardinality                        */
     public void testCardinalityMT() throws Exception {
         // first check that it's empty. 
-        for (int i = 0; i < 1000; i++) {
+        for (int i = 0; i < 5000; i++) {
             int length = Utility.randInt(0, 15);
             FiniteBag r = randTree(length);
             if (!r.isEmptyHuh() && (r.cardinality() == 0)) {
@@ -83,7 +108,7 @@ public class TestTest<D extends Comparable> {
     }
 
     public void testCardinalityAdd() throws Exception {
-        for (int i = 0; i < 1000; i++) {
+        for (int i = 0; i < 5000; i++) {
             int length = Utility.randInt(0, 15);
             FiniteBag r = randTree(length);
             int cardC = r.cardinality();
@@ -98,7 +123,7 @@ public class TestTest<D extends Comparable> {
     }
 
     public void testCardinalityRemove() throws Exception {
-        for (int i = 0; i < 1000; i++) {
+        for (int i = 0; i < 5000; i++) {
             D rElt = rand.createRand();
             int length = Utility.randInt(0, 15);
             FiniteBag r = randTree(length);
@@ -113,6 +138,16 @@ public class TestTest<D extends Comparable> {
             CardRemovetest++;
         }
     }
+    
+    public void testMemberDiff() throws Exception {
+        for (int i = 0; i<5000; i++) {
+            D rElt = rand.createRand();
+            int length = Utility.randInt(0,10);
+            FiniteBag r = randTree(length);
+        }
+        
+    }
+    
 
     public static void main(String[] args) throws Exception {
         // TODO code application logic here
@@ -123,18 +158,42 @@ public class TestTest<D extends Comparable> {
 
         System.out.println("------------------------------------------------------------");
         System.out.println("TESTING EMPTY . . . ");
+        System.out.println("------------------------------------------------------------");
         intTest.testIsEmptyHuhMT(checkInt);
         stringTest.testIsEmptyHuhMT(checkInt);
-        System.out.println("Tested testIsEmptyHUHMT " + MTtest + " times");
+        System.out.println("Tested IsEmptyHUH " + MTtest + " successful times");
+        System.out.println();
+        intTest.testEmptyUnion();
+        stringTest.testEmptyUnion();
+        System.out.println("Tested EmptyUnion " + MTUniontest + " successful times");
+        System.out.println();
+        intTest.testEmptyInter();
+        stringTest.testEmptyInter();
+        System.out.println("Tested EmptyUnion " + MTIntertest + " successful times");
 
         System.out.println();
         System.out.println("------------------------------------------------------------");
-        System.out.println("TESTING CARDINALITY . . . ");
+        System.out.println("TESTING CARDINALITY. . . ");
+        System.out.println("------------------------------------------------------------");
         intTest.testCardinalityMT();
         stringTest.testCardinalityMT();
-        System.out.println("Tested testCardinalityMT " + CardMTtest + " times");
+        System.out.println("Tested CardinalityMT " + CardMTtest + " successful times");
 
-        //testCardinalityMT(mt);
+        System.out.println();
+
+        intTest.testCardinalityAdd();
+        stringTest.testCardinalityAdd();
+        System.out.println("Tested CardinalityAdd " + CardAddtest + " successful times");
+
+        System.out.println();
+
+        intTest.testCardinalityRemove();
+        stringTest.testCardinalityRemove();
+        System.out.println("Tested CardinalityRemove " + CardRemovetest + " successful times");
+        System.out.println();
+        System.out.println("------------------------------------------------------------");
+        System.out.println("TESTING MEMBER. . . ");
+        System.out.println("------------------------------------------------------------");
     }
 
 }

@@ -83,9 +83,8 @@ public class SBBT_ST<D extends Comparable> implements FiniteBag<D> {
         }
     }
 
-
 // (member t elt) --> boolean where t is a finite-bag and elt is an int
-public boolean member(D elt) {
+    public boolean member(D elt) {
         //compareTo part of comparable
         if (elt.compareTo(this.here) == 0) {
             return this.count > 0;
@@ -101,7 +100,7 @@ public boolean member(D elt) {
         return this.remove(elt, 1);
 
     }
-    
+
     public String toString() {
         return "( " + left + " " + right + ")";
     }
@@ -166,7 +165,10 @@ public boolean member(D elt) {
         SBBT_ST rightyleft;
         SBBT_ST rightyright;
 
-        if ((this.isBlackHuh() && (this.left instanceof SBBT_ST) && !((SBBT_ST) this.left).isBlackHuh()
+        if ((this.isBlackHuh()
+                && (this.left instanceof SBBT_ST)
+                && (((SBBT_ST) this.left).left instanceof SBBT_ST)
+                && !((SBBT_ST) this.left).isBlackHuh()
                 && !((SBBT_ST) this.left).left.isBlackHuh())) {
             //cast it so compiler knows it's SBBT_ST
             //error here because i can't get the left of left. 
@@ -183,7 +185,10 @@ public boolean member(D elt) {
 
             //this return statement is a filler
             //return new SBBT_ST(this.left, this.here, this.right, this.count, this.isBlack);
-        } else if ((this.isBlackHuh() && (this.left instanceof SBBT_ST) && !((SBBT_ST) this.left).isBlackHuh()
+        } else if ((this.isBlackHuh() 
+                && (this.left instanceof SBBT_ST) 
+                && (((SBBT_ST) this.left).right instanceof SBBT_ST)
+                && !((SBBT_ST) this.left).isBlackHuh()
                 && !((SBBT_ST) this.left).right.isBlackHuh())) {
 
             lefty = ((SBBT_ST) this.left);
@@ -197,7 +202,10 @@ public boolean member(D elt) {
                     /* count */ leftyright.count,
                     /* isBlack */ false);
 
-        } else if ((this.isBlackHuh() && (this.right instanceof SBBT_ST) && !((SBBT_ST) this.right).isBlackHuh()
+        } else if ((this.isBlackHuh() 
+                && (this.right instanceof SBBT_ST) 
+                && (((SBBT_ST) this.right).left instanceof SBBT_ST)
+                && !((SBBT_ST) this.right).isBlackHuh()
                 && !((SBBT_ST) this.right).left.isBlackHuh())) {
 
             righty = ((SBBT_ST) this.right);
@@ -210,7 +218,10 @@ public boolean member(D elt) {
                     /* count */ rightyleft.count,
                     /* isBlack */ false);
 
-        } else if ((this.isBlackHuh() && (this.right instanceof SBBT_ST) && !((SBBT_ST) this.right).isBlackHuh()
+        } else if ((this.isBlackHuh() 
+                && (this.right instanceof SBBT_ST) 
+                && (((SBBT_ST) this.right).right instanceof SBBT_ST)
+                && !((SBBT_ST) this.right).isBlackHuh()
                 && !((SBBT_ST) this.right).right.isBlackHuh())) {
 
             righty = ((SBBT_ST) this.right);
@@ -278,21 +289,20 @@ public boolean member(D elt) {
     }
 
     public Sequence<D> seq() {
-       return new SequenceST(here, count, (new SequenceCat(left.seq(), right.seq())));
+        return new SequenceST(here, count, (new SequenceCat(left.seq(), right.seq())));
     }
-
 
     public int sumIt() {
-       return sumItS(this.seq());
+        return sumItS(this.seq());
     }
 
-
     public int sumItS(Sequence<D> as) {
-       int sum = 0;
-       while (as.hasNext()) {
-           sum = sum + 1;
-           as = as.next();
-       } return sum;
+        int sum = 0;
+        while (as.hasNext()) {
+            sum = sum + 1;
+            as = as.next();
+        }
+        return sum;
     }
 
 }
