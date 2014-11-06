@@ -41,8 +41,8 @@ public class SequenceCat<D extends Comparable> implements Sequence<D> {
          }
      }
      
-     public String sequence2String() {
-         return this.left.sequence2String() + " " + this.right.sequence2String();
+     public String seqToString() {
+         return this.left.seqToString() + " " + this.right.seqToString();
      }
      
      public Sequence<D> seq() {

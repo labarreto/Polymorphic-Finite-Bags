@@ -123,7 +123,14 @@ public class SBBT_MT<D extends Comparable> implements FiniteBag<D> {
         return new SBBT_ST(elt, count);
     }
 
-  
+    public String stringItS(Sequence<D> s) {
+        return "";
+    }
+    
+    public String stringIt() {
+        return stringItS(this.seq());
+    }
+    
     public int sumIt() {
         return sumItS(this.seq());
     }

@@ -22,5 +22,5 @@ public interface Sequence<D> {
     //moves to the next item in sequence. Originally named this IAInt,
     //but it makes more sense to refer to its functionality "sequence"
     
-    public String sequence2String();
+    public String seqToString();
 }

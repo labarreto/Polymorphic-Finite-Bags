@@ -48,5 +48,9 @@ public interface FiniteBag<D extends Comparable> extends Sequenced<D> {
     public int sumIt();
     
     public int sumItS(Sequence<D> as);
+    
+    public String stringIt();
+    
+    public String stringItS(Sequence<D> s);
 
 }

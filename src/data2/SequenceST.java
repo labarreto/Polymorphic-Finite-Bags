@@ -40,7 +40,7 @@ public SequenceST(D here, int count, Sequence<D> next) {
         return this;
     }
     
-    public String sequence2String() {
+    public String seqToString() {
         return " " + this.here;
     }
 }

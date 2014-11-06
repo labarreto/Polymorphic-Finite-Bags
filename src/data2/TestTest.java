@@ -28,7 +28,12 @@ public class TestTest<D extends Comparable> {
     static int MemberUniontest = 0;
     static int MemberIntertest = 0;
     static int MemberAddtest = 0;
-    static int UnionSubsettest= 0;
+    static int UnionSubsettest = 0;
+    static int EqualIntertest = 0;
+    static int InterAddMembertest = 0;
+    static int AddGetCounttest = 0;
+    static int RemoveGetCounttest = 0;
+    static int AddRemoveCardinalitytest = 0;
 
     TestTest(Randomness<D> rand) {
         this.rand = rand;
@@ -220,10 +225,10 @@ public class TestTest<D extends Comparable> {
             MemberAddtest++;
         }
     }
-    
+
     public void testUnionSubset() throws Exception {
         for (int i = 0; i < 5000; i++) {
-            int length = Utility.randInt(0,15);
+            int length = Utility.randInt(0, 15);
             FiniteBag r = randTree(length);
             FiniteBag s = randTree(length);
             FiniteBag t = r.union(s);
@@ -231,6 +236,95 @@ public class TestTest<D extends Comparable> {
                 throw new Exception("Failure! r and s are not subsets of union of r and s");
             }
             UnionSubsettest++;
+        }
+    }
+
+    public void testEqualInter() throws Exception {
+        for (int i = 0; i < 5000; i++) {
+            int length = Utility.randInt(0, 15);
+            FiniteBag r = randTree(length);
+            FiniteBag s = randTree(length);
+            FiniteBag t = r.union(s);
+            if (!r.inter(s).equal(s.inter(r))) {
+                throw new Exception("Failure! r intersection s is not equal to s intersection r");
+            }
+            EqualIntertest++;
+        }
+    }
+
+    public void testAddGetCount() throws Exception {
+        for (int i = 0; i < 5000; i++) {
+            int length = Utility.randInt(0, 15);
+            int randNum = Utility.randInt(2, 15);
+            D rElt = rand.createRand();
+            FiniteBag r = randTree(length);
+            if (!(r.getCount(rElt) <= r.add(rElt).getCount(rElt))) {
+                throw new Exception("Failure! The count of elements does not increase after adding an element");
+            }
+            if (!(r.getCount(rElt) <= r.add(rElt, randNum).getCount(rElt))) {
+                throw new Exception("Failure! The count of elements does not increase after adding n number of elements");
+            }
+            AddGetCounttest++;
+        }
+    }
+
+    public void testRemoveGetCount() throws Exception {
+        for (int i = 0; i < 5000; i++) {
+            int length = Utility.randInt(0, 15);
+            int randNum = Utility.randInt(1, 15);
+            D rElt = rand.createRand();
+            FiniteBag r = randTree(length);
+            FiniteBag s = r.add(rElt);
+            FiniteBag t = r.add(rElt, randNum);
+            if (!(r.getCount(rElt) >= s.remove(rElt).getCount(rElt))) {
+                throw new Exception("Failure! The count of random tree before and the count after adding and then removing a random element is not the same!");
+            }
+            if (!(r.getCount(rElt) >= s.remove(rElt, randNum).getCount(rElt))) {
+                throw new Exception("Failure! The count of random tree before and the count after adding and then removing n random elements is not the same!");
+
+            }
+            RemoveGetCounttest++;
+        }
+    }
+
+    public void testAddRemoveCardinality() throws Exception {
+        for (int i = 0; i < 5000; i++) {
+            int length = Utility.randInt(0, 15);
+            int randNum = Utility.randInt(1, 15);
+            D rElt = rand.createRand();
+            FiniteBag r = randTree(length);
+            FiniteBag s = r.add(rElt);
+            FiniteBag t = r.add(rElt, randNum);
+            FiniteBag u = s.remove(rElt);
+            FiniteBag v = t.remove(rElt, randNum);
+
+            if (!(r.cardinality() < s.cardinality()) && (!(r.cardinality() < t.cardinality()))) {
+                throw new Exception("Cardinality does not increase when elements added");
+
+            }
+            if (!(r.cardinality() >= u.cardinality()) && (!(r.cardinality() >= v.cardinality()))) {
+                throw new Exception("Cardinality does not decrease or stay the same when elements removed");
+            }
+            AddRemoveCardinalitytest++;
+        }
+    }
+
+    public void testSumItCardinality() throws Exception {
+        for (int i = 0; i < 5000; i++) {
+            int length = Utility.randInt(0, 15);
+            FiniteBag r = randTree(length);
+            if (r.sumIt() != r.cardinality()) {
+                throw new Exception("Failure! Sequence does not coincide with cardinality");
+            }
+
+        }
+    }
+
+    public void testSeqToString() throws Exception {
+        for (int i = 0; i < 5000; i++) {
+            int length = Utility.randInt(0, 15);
+            FiniteBag r = randTree(length);
+            System.out.println("stringing: " + r.stringIt());
         }
     }
 
@@ -244,21 +338,18 @@ public class TestTest<D extends Comparable> {
 //        System.out.println("------------------------------------------------------------");
 //        System.out.println("TESTING EMPTY . . . ");
 //        System.out.println("------------------------------------------------------------");
-        
         System.out.println("-*-*-*-*- EMPTY");
         intTest.testIsEmptyHuhMT(checkInt);
         stringTest.testIsEmptyHuhMT(checkInt);
         System.out.println("Tested IsEmptyHUH " + MTtest + " successful times");
         System.out.println();
-        
-        
+
         System.out.println("-*-*-*-*- EMPTY and UNION");
         intTest.testEmptyUnion();
         stringTest.testEmptyUnion();
         System.out.println("Tested EmptyUnion " + MTUniontest + " successful times");
         System.out.println();
-        
-        
+
         System.out.println("-*-*-*-*- EMPTY and INTERSECTION");
         intTest.testEmptyInter();
         stringTest.testEmptyInter();
@@ -266,7 +357,6 @@ public class TestTest<D extends Comparable> {
 
         System.out.println();
 
-        
         System.out.println("-*-*-*-*- EMPTY and CARDINALITY");
         intTest.testCardinalityMT();
         stringTest.testCardinalityMT();
@@ -274,7 +364,6 @@ public class TestTest<D extends Comparable> {
 
         System.out.println();
 
-        
         System.out.println("-*-*-*-*- CARDINALITY and ADD");
         intTest.testCardinalityAdd();
         stringTest.testCardinalityAdd();
@@ -282,52 +371,65 @@ public class TestTest<D extends Comparable> {
 
         System.out.println();
 
-        
         System.out.println("-*-*-*-*- CARDINALITY and REMOVE");
         intTest.testCardinalityRemove();
         stringTest.testCardinalityRemove();
         System.out.println("Tested CardinalityRemove " + CardRemovetest + " successful times");
         System.out.println();
 
-
-        
-        
-        
         System.out.println("-*-*-*-*- MEMBER and DIFFERENCE");
         intTest.testMemberDiff();
         stringTest.testMemberDiff();
         System.out.println("Tested MemberDiff " + MemberDifftest + " successful times");
         System.out.println();
 
-        
         System.out.println("-*-*-*-*- MEMBER and UNION");
         intTest.testMemberUnion();
         stringTest.testMemberUnion();
         System.out.println("Tested MemberUnion " + MemberUniontest + " successful times");
         System.out.println();
 
-        
         System.out.println("-*-*-*-*- MEMBER and INTERSECTION");
         intTest.testMemberInter();
         stringTest.testMemberInter();
         System.out.println("Tested MemberInter " + MemberIntertest + " successful times");
         System.out.println();
 
-        
         System.out.println("-*-*-*-*- MEMBER and ADD");
         intTest.testMemberAdd();
         stringTest.testMemberAdd();
         System.out.println("Tested MemberAdd " + MemberAddtest + " successful times");
         System.out.println();
-        
+
         System.out.println("-*-*-*-*- UNION and SUBSETS");
         intTest.testUnionSubset();
         stringTest.testUnionSubset();
         System.out.println("Tested UnionSubset " + UnionSubsettest + " successful times");
         System.out.println();
-   
-        
-        
+
+        System.out.println("-*-*-*-*- EQUAL and INTERSECTION");
+        intTest.testEqualInter();
+        stringTest.testEqualInter();
+        System.out.println("Tested EqualInter " + EqualIntertest + " successful times");
+        System.out.println();
+
+        System.out.println("-*-*-*-*- ADD and GETCOUNT");
+        intTest.testAddGetCount();
+        stringTest.testAddGetCount();
+        System.out.println("Tested AddGetCount " + AddGetCounttest + " successful times");
+        System.out.println();
+
+        System.out.println("-*-*-*-*- REMOVE and GETCOUNT");
+        intTest.testRemoveGetCount();
+        stringTest.testRemoveGetCount();
+        System.out.println("Tested RemoveGetCount " + RemoveGetCounttest + " successful times");
+        System.out.println();
+
+        System.out.println("-*-*-*-*- ADD and REMOVE and CARDINALITY");
+        intTest.testAddRemoveCardinality();
+        stringTest.testAddRemoveCardinality();
+        System.out.println("Tested AddRemoveCardinality " + AddRemoveCardinalitytest + " successful times");
+        System.out.println();
 
     }
 

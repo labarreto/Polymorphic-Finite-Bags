@@ -32,7 +32,7 @@ public class SequenceMT<D extends Comparable> implements Sequence<D> {
         return this;
     }
 
-    public String sequence2String() {
+    public String seqToString() {
         return " ";
     }
 

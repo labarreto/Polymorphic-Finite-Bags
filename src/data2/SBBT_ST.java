@@ -287,6 +287,22 @@ public class SBBT_ST<D extends Comparable> implements FiniteBag<D> {
             return new SBBT_ST(this.left, this.here, this.right.insertInner(elt, count), this.count, this.isBlack).balance();
         }
     }
+    
+    
+    public String stringItS(Sequence<D> s) {
+        StringBuffer buffy = new StringBuffer("");
+        
+        while(s.hasNext()) {
+            buffy.append(s.next().seqToString());
+            buffy.append(" ");
+            s = s.next();
+        }
+        return buffy.toString();
+    }
+    
+    public String stringIt() {
+        return stringItS(this.seq());
+    }
 
     public Sequence<D> seq() {
         return new SequenceST(here, count, (new SequenceCat(left.seq(), right.seq())));
@@ -304,5 +320,7 @@ public class SBBT_ST<D extends Comparable> implements FiniteBag<D> {
         }
         return sum;
     }
+
+
 
 }
