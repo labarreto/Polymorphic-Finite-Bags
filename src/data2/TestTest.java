@@ -25,6 +25,10 @@ public class TestTest<D extends Comparable> {
     static int CardAddtest = 0;
     static int CardRemovetest = 0;
     static int MemberDifftest = 0;
+    static int MemberUniontest = 0;
+    static int MemberIntertest = 0;
+    static int MemberAddtest = 0;
+    static int UnionSubsettest= 0;
 
     TestTest(Randomness<D> rand) {
         this.rand = rand;
@@ -138,16 +142,97 @@ public class TestTest<D extends Comparable> {
             CardRemovetest++;
         }
     }
-    
+
     public void testMemberDiff() throws Exception {
-        for (int i = 0; i<5000; i++) {
+        for (int i = 0; i < 5000; i++) {
             D rElt = rand.createRand();
-            int length = Utility.randInt(0,10);
+            int length = Utility.randInt(0, 10);
             FiniteBag r = randTree(length);
+            FiniteBag s = randTree(length);
+            if (r.diff(s).member(rElt)) {
+                if (!s.member(rElt)) {
+                    throw new Exception("Failure! random elt should be in s");
+                }
+            } else if (!s.member(rElt) || r.member(rElt)) {
+
+            } else {
+                throw new Exception("Failure! Try again");
+            }
+            MemberDifftest++;
         }
-        
+
+    }
+
+    public void testMemberUnion() throws Exception {
+        for (int i = 0; i < 5000; i++) {
+            int length = Utility.randInt(0, 15);
+            FiniteBag r = randTree(length);
+            FiniteBag s = randTree(length);
+            D rElt = rand.createRand();
+            if (r.union(s).member(rElt)) {
+                if (r.member(rElt) || s.member(rElt)) {
+                } else {
+                    throw new Exception("Failure! rElt should be member of either set or both!");
+                }
+            } else {
+                if (r.member(rElt) || s.member(rElt)) {
+                    throw new Exception("Failure! rElt should not be in either set!");
+                }
+            }
+            MemberUniontest++;
+        }
+    }
+
+    public void testMemberInter() throws Exception {
+        for (int i = 0; i < 5000; i++) {
+            int length = Utility.randInt(0, 15);
+            FiniteBag r = randTree(length);
+            FiniteBag s = randTree(length);
+            D rElt = rand.createRand();
+            if (r.inter(s).member(rElt)) {
+                if (r.member(rElt) && s.member(rElt)) {
+                } else {
+                    throw new Exception("Failure! rElt should be member of both!");
+                }
+
+            }
+            MemberIntertest++;
+        }
+    }
+
+    public void testMemberAdd() throws Exception {
+        for (int i = 0; i < 5000; i++) {
+            D bElt = rand.createRand();
+            D fElt = rand.createRand();
+            int length = Utility.randInt(0, 15);
+            FiniteBag r = randTree(length);
+            if (r.add(bElt).member(fElt)) {
+                if (bElt.compareTo(fElt) == 0 || r.member(fElt)) {
+
+                } else {
+                    throw new Exception("Failure. fElt should not be in the set");
+                }
+            } else {
+                if (bElt.compareTo(fElt) == 0 || r.member(fElt)) {
+                    throw new Exception("Failure!");
+                }
+            }
+            MemberAddtest++;
+        }
     }
     
+    public void testUnionSubset() throws Exception {
+        for (int i = 0; i < 5000; i++) {
+            int length = Utility.randInt(0,15);
+            FiniteBag r = randTree(length);
+            FiniteBag s = randTree(length);
+            FiniteBag t = r.union(s);
+            if (!(r.subset(t) && s.subset(t))) {
+                throw new Exception("Failure! r and s are not subsets of union of r and s");
+            }
+            UnionSubsettest++;
+        }
+    }
 
     public static void main(String[] args) throws Exception {
         // TODO code application logic here
@@ -156,44 +241,94 @@ public class TestTest<D extends Comparable> {
         TestTest stringTest = new TestTest(new randString());
         int checkInt = Utility.randInt(0, 1);
 
-        System.out.println("------------------------------------------------------------");
-        System.out.println("TESTING EMPTY . . . ");
-        System.out.println("------------------------------------------------------------");
+//        System.out.println("------------------------------------------------------------");
+//        System.out.println("TESTING EMPTY . . . ");
+//        System.out.println("------------------------------------------------------------");
+        
+        System.out.println("-*-*-*-*- EMPTY");
         intTest.testIsEmptyHuhMT(checkInt);
         stringTest.testIsEmptyHuhMT(checkInt);
         System.out.println("Tested IsEmptyHUH " + MTtest + " successful times");
         System.out.println();
+        
+        
+        System.out.println("-*-*-*-*- EMPTY and UNION");
         intTest.testEmptyUnion();
         stringTest.testEmptyUnion();
         System.out.println("Tested EmptyUnion " + MTUniontest + " successful times");
         System.out.println();
+        
+        
+        System.out.println("-*-*-*-*- EMPTY and INTERSECTION");
         intTest.testEmptyInter();
         stringTest.testEmptyInter();
         System.out.println("Tested EmptyUnion " + MTIntertest + " successful times");
 
         System.out.println();
-        System.out.println("------------------------------------------------------------");
-        System.out.println("TESTING CARDINALITY. . . ");
-        System.out.println("------------------------------------------------------------");
+
+        
+        System.out.println("-*-*-*-*- EMPTY and CARDINALITY");
         intTest.testCardinalityMT();
         stringTest.testCardinalityMT();
         System.out.println("Tested CardinalityMT " + CardMTtest + " successful times");
 
         System.out.println();
 
+        
+        System.out.println("-*-*-*-*- CARDINALITY and ADD");
         intTest.testCardinalityAdd();
         stringTest.testCardinalityAdd();
         System.out.println("Tested CardinalityAdd " + CardAddtest + " successful times");
 
         System.out.println();
 
+        
+        System.out.println("-*-*-*-*- CARDINALITY and REMOVE");
         intTest.testCardinalityRemove();
         stringTest.testCardinalityRemove();
         System.out.println("Tested CardinalityRemove " + CardRemovetest + " successful times");
         System.out.println();
-        System.out.println("------------------------------------------------------------");
-        System.out.println("TESTING MEMBER. . . ");
-        System.out.println("------------------------------------------------------------");
+
+
+        
+        
+        
+        System.out.println("-*-*-*-*- MEMBER and DIFFERENCE");
+        intTest.testMemberDiff();
+        stringTest.testMemberDiff();
+        System.out.println("Tested MemberDiff " + MemberDifftest + " successful times");
+        System.out.println();
+
+        
+        System.out.println("-*-*-*-*- MEMBER and UNION");
+        intTest.testMemberUnion();
+        stringTest.testMemberUnion();
+        System.out.println("Tested MemberUnion " + MemberUniontest + " successful times");
+        System.out.println();
+
+        
+        System.out.println("-*-*-*-*- MEMBER and INTERSECTION");
+        intTest.testMemberInter();
+        stringTest.testMemberInter();
+        System.out.println("Tested MemberInter " + MemberIntertest + " successful times");
+        System.out.println();
+
+        
+        System.out.println("-*-*-*-*- MEMBER and ADD");
+        intTest.testMemberAdd();
+        stringTest.testMemberAdd();
+        System.out.println("Tested MemberAdd " + MemberAddtest + " successful times");
+        System.out.println();
+        
+        System.out.println("-*-*-*-*- UNION and SUBSETS");
+        intTest.testUnionSubset();
+        stringTest.testUnionSubset();
+        System.out.println("Tested UnionSubset " + UnionSubsettest + " successful times");
+        System.out.println();
+   
+        
+        
+
     }
 
 }
