@@ -116,9 +116,9 @@ public class SBBT_ST<D extends Comparable> implements FiniteBag<D> {
             //returning count - n elements
             return new SBBT_ST(this.left, this.here, this.right, max);
         } else if (elt.compareTo(this.here) < 0) {
-            return new SBBT_ST(this.left.remove(elt, n), this.here, this.right, this.count);
+            return new SBBT_ST(this.left.remove(elt, n), this.here, this.right, this.count).balance();
         } else {
-            return new SBBT_ST(this.left, this.here, this.right.remove(elt, n), this.count);
+            return new SBBT_ST(this.left, this.here, this.right.remove(elt, n), this.count).balance();
         }
     }
 
@@ -128,26 +128,28 @@ public class SBBT_ST<D extends Comparable> implements FiniteBag<D> {
             return new SBBT_ST(this.left, this.here, this.right, 0);
             //take the union of the left and right trees to put them together
         } else if (elt.compareTo(this.here) < 0) {
-            return new SBBT_ST(this.left.removeAll(elt), this.here, this.right, this.count);
+            return new SBBT_ST(this.left.removeAll(elt), this.here, this.right, this.count).balance();
         } else {
-            return new SBBT_ST(this.left, this.here, this.right.removeAll(elt), this.count);
+            return new SBBT_ST(this.left, this.here, this.right.removeAll(elt), this.count).balance();
         }
     }
 
     public FiniteBag<D> add(D elt) {
-        return this.add(elt, 1);
+        return this.add(elt, 1).blacken();
     }
 
     public FiniteBag<D> add(D elt, int n) {
         if (elt.compareTo(this.here) == 0) {
             return new SBBT_ST(this.left, this.here, this.right, this.count + n, this.isBlack);
         } else if (elt.compareTo(this.here) < 0) {
-            return new SBBT_ST(this.left.add(elt, n), this.here, this.right, this.count, this.isBlack);
+            return new SBBT_ST(this.left.add(elt, n), this.here, this.right, this.count, this.isBlack).balance();
         } else {
-            return new SBBT_ST(this.left, this.here, this.right.add(elt, n), this.count, this.isBlack);
+            return new SBBT_ST(this.left, this.here, this.right.add(elt, n), this.count, this.isBlack).balance();
         }
 
     }
+    
+
 
     public FiniteBag blacken() {
         return new SBBT_ST(this.left, this.here, this.right, this.count, true);
@@ -274,20 +276,8 @@ public class SBBT_ST<D extends Comparable> implements FiniteBag<D> {
 
     }
 
-    public FiniteBag<D> insert(D elt, int count) {
-        return this.insertInner(elt, count).blacken();
-    }
 
-    public FiniteBag<D> insertInner(D elt, int count) {
-        if (elt.compareTo(this.here) == 0) {
-            return new SBBT_ST(this.left, this.here, this.right, this.count + count, this.isBlack);
-        } else if (elt.compareTo(this.here) < 0) {
-            return new SBBT_ST(this.left.insert(elt, count), this.here, this.right, this.count, this.isBlack).balance();
-        } else {
-            return new SBBT_ST(this.left, this.here, this.right.insertInner(elt, count), this.count, this.isBlack).balance();
-        }
-    }
-    
+   
     
     public String stringItS(Sequence<D> s) {
         StringBuffer buffy = new StringBuffer("");

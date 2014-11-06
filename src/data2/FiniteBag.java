@@ -39,10 +39,6 @@ public interface FiniteBag<D extends Comparable> extends Sequenced<D> {
 
     public FiniteBag<D> diff(FiniteBag u);
     
-    public FiniteBag<D> insert(D elt, int count);
-    
-    public FiniteBag<D> insertInner(D elt, int count);
-    
     public Sequence<D> seq();
     
     public int sumIt();

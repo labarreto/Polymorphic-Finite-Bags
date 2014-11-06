@@ -71,7 +71,7 @@ public class SBBT_MT<D extends Comparable> implements FiniteBag<D> {
     }
 
     public FiniteBag<D> add(D elt) {
-        return add(elt, 1);
+        return add(elt, 1).blacken();
     }
     // (add t elt) --> finite-set where t is a finite-set and elt is an ent
 
@@ -111,16 +111,6 @@ public class SBBT_MT<D extends Comparable> implements FiniteBag<D> {
     
     public Sequence<D> seq() {
         return new SequenceMT();
-    }
-
-
-    public FiniteBag<D> insert(D elt, int count) {
-       return this.insertInner(elt, count).blacken();
-    }
-
-
-    public FiniteBag<D> insertInner(D elt, int count) {
-        return new SBBT_ST(elt, count);
     }
 
     public String stringItS(Sequence<D> s) {
