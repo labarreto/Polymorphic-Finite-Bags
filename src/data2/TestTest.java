@@ -34,6 +34,8 @@ public class TestTest<D extends Comparable> {
     static int AddGetCounttest = 0;
     static int RemoveGetCounttest = 0;
     static int AddRemoveCardinalitytest = 0;
+    static int SumItCardinalitytest = 0;
+    static int SeqToStringtest = 0;
 
     TestTest(Randomness<D> rand) {
         this.rand = rand;
@@ -321,10 +323,10 @@ public class TestTest<D extends Comparable> {
     }
 
     public void testSeqToString() throws Exception {
-        for (int i = 0; i < 5000; i++) {
+        for (int i = 0; i < 5; i++) {
             int length = Utility.randInt(0, 15);
             FiniteBag r = randTree(length);
-            System.out.println("stringing: " + r.stringIt());
+            System.out.println("SeqToString: " + r.stringIt());
         }
     }
 
@@ -429,6 +431,18 @@ public class TestTest<D extends Comparable> {
         intTest.testAddRemoveCardinality();
         stringTest.testAddRemoveCardinality();
         System.out.println("Tested AddRemoveCardinality " + AddRemoveCardinalitytest + " successful times");
+        System.out.println();
+        
+        System.out.println("-*-*-*-*- SUMIT and CARDINALITY");
+        intTest.testSumItCardinality();
+        stringTest.testSumItCardinality();
+        System.out.println("Tested ASumItCardinality " + SumItCardinalitytest + " successful times");
+        System.out.println();
+        
+        System.out.println("-*-*-*-*- SEQTOSTRING");
+        intTest.testSeqToString();
+        stringTest.testSeqToString();
+        System.out.println("Tested SeqToString " + SeqToStringtest + " successful times");
         System.out.println();
 
     }
