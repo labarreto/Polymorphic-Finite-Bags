@@ -64,9 +64,10 @@ public class TestTest<D extends Comparable> {
         }
     }
 
-    /*                    testing empty                       */
+
     public void testIsEmptyHuhMT(int count) throws Exception {
-        for (int i = 0; i < 5000; i++) { // run 100 tests
+        for (int i = 0; i < 5000; i++) { 
+
             if (count == 0) {
                 FiniteBag mt = MT();
                 if (!mt.isEmptyHuh()) {
@@ -297,7 +298,6 @@ public class TestTest<D extends Comparable> {
             int length = Utility.randInt(0, 15);
             FiniteBag r = randTree(length);
             FiniteBag s = randTree(length);
-            FiniteBag t = r.union(s);
             if (!r.inter(s).equal(s.inter(r))) {
                 throw new Exception("Failure! r intersection s is not equal to s intersection r");
             }
@@ -438,14 +438,12 @@ public class TestTest<D extends Comparable> {
         intTest.testCardinalityMT();
         stringTest.testCardinalityMT();
         System.out.println("Tested CardinalityMT " + CardMTtest + " successful times");
-
         System.out.println();
 
         System.out.println("-*-*-*-*- CARDINALITY and ADD");
         intTest.testCardinalityAdd();
         stringTest.testCardinalityAdd();
         System.out.println("Tested CardinalityAdd " + CardAddtest + " successful times");
-
         System.out.println();
 
         System.out.println("-*-*-*-*- CARDINALITY and REMOVE");
@@ -513,9 +511,6 @@ public class TestTest<D extends Comparable> {
         stringTest.testRemoveGetCount();
         System.out.println("Tested RemoveGetCount " + RemoveGetCounttest + " successful times");
         System.out.println();
-        
-
-
 
         System.out.println("-*-*-*-*- ADD and REMOVE and CARDINALITY");
         intTest.testAddRemoveCardinality();

@@ -9,7 +9,7 @@ import java.util.Random;
 
 /**
  *
- * @author ldbruby95
+ * @author Laura Barreto
  */
 public class Utility {
 

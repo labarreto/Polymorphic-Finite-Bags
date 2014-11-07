@@ -10,7 +10,7 @@ package data2;
  * @author Laura Barreto
  * @param <D> Generic object type
  */
-//iterator interface
+
 public interface Sequence<D> {
     
     /**
@@ -32,12 +32,10 @@ public interface Sequence<D> {
      * @return Sequence containing generic objects D that follow the current object
      */
     public Sequence<D> next();
-    //moves to the next item in sequence. Originally named this IAInt,
-    //but it makes more sense to refer to its functionality "sequence"
-    
+
     /**
      * Example: [a, b, c, d].seqToString() = "a b c d"
-     * @return 
+     * @return String of the Sequence
      */
     public String seqToString();
 }
