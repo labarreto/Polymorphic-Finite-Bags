@@ -106,6 +106,7 @@ public interface FiniteBag<D extends Comparable> extends Sequenced<D> {
      * @param u is a FiniteBag containing generic object types D
      * @return Boolean that indicates whether this is a subset of u
      */
+    
     public boolean subset(FiniteBag u);
     
     /**
@@ -173,9 +174,9 @@ public interface FiniteBag<D extends Comparable> extends Sequenced<D> {
     
     public String stringItS(Sequence<D> s);
     
-        /**
+     /**
      *
-     * @return Parent node of set becomes black
+     * @return Black parent node
      */
 
     public FiniteBag<D> blacken();

@@ -7,20 +7,37 @@ package data2;
 
 /**
  *
- * @author ldbruby95
+ * @author Laura Barreto
+ * @param <D> Generic object type
  */
 //iterator interface
 public interface Sequence<D> {
+    
+    /**
+     * Example: [a, b, c, d].here() = a
+     * @return Generic object D that is at the current location in sequence being looked at
+     */
+
 
     public D here();
 
-    //looks at object here
+    /**
+     * Example: [a, b, c, d].hasNext() = true;
+     * @return Boolean that represents if end of sequence has not been reached
+     */
     public boolean hasNext();
-
-    //checks to see if there is a next element
+    
+     /**
+     * Example: [a, b, c, d].next() = [b, c, d];
+     * @return Sequence containing generic objects D that follow the current object
+     */
     public Sequence<D> next();
     //moves to the next item in sequence. Originally named this IAInt,
     //but it makes more sense to refer to its functionality "sequence"
     
+    /**
+     * Example: [a, b, c, d].seqToString() = "a b c d"
+     * @return 
+     */
     public String seqToString();
 }
