@@ -304,6 +304,8 @@ public class TestTest<D extends Comparable> {
             EqualIntertest++;
         }
     }
+    
+
 
     public void testAddGetCount() throws Exception {
         for (int i = 0; i < 5000; i++) {
@@ -327,7 +329,7 @@ public class TestTest<D extends Comparable> {
             int randNum = Utility.randInt(1, 15);
             D rElt = rand.createRand();
             FiniteBag r = randTree(length);
-            FiniteBag s = r.add(rElt);
+            FiniteBag s = r.add(rElt); //did this to guarantee the element was in the set
             FiniteBag t = r.add(rElt, randNum);
             if (!(r.getCount(rElt) >= s.remove(rElt).getCount(rElt))) {
                 throw new Exception("Failure! The count of random tree before and the count after adding and then removing a random element is not the same!");
@@ -388,12 +390,14 @@ public class TestTest<D extends Comparable> {
     }
 
     public void testSeqToString() throws Exception {
-        for (int i = 0; i < 5000; i++) {
-            int length = Utility.randInt(0, 15);
+        for (int i = 0; i < 5; i++) {
+            int length = Utility.randInt(0, 5);
             FiniteBag r = randTree(length);
             String s = r.stringIt();
             if (!(s instanceof String)) {
                 throw new Exception("Failure! Sequence not turned into a string!");
+            } else {
+                System.out.println("SeqToString: [" + r.stringIt() + "]");
             }
             SeqToStringtest++;
         }
@@ -533,6 +537,7 @@ public class TestTest<D extends Comparable> {
         System.out.println("-*-*-*-*- SEQTOSTRING");
         intTest.testSeqToString();
         stringTest.testSeqToString();
+        System.out.println();
         System.out.println("Tested SeqToString " + SeqToStringtest + " successful times");
         System.out.println();
 

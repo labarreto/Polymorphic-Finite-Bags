@@ -38,20 +38,7 @@ public class SBBT_ST<D extends Comparable> implements FiniteBag<D> {
         this.isBlack = isBlack;
     }
 
-    public SBBT_ST(D here) {
-        this.here = here;
-        this.count = 1;
-        this.left = new SBBT_MT();
-        this.right = new SBBT_MT();
-    }
 
-    public SBBT_ST(D here, int count) {
-        this.here = here;
-        this.count = count;
-        this.isBlack = false;
-        this.left = new SBBT_MT();
-        this.right = new SBBT_MT();
-    }
 
     public int getCount(D elt) {
         if (elt.compareTo(this.here) == 0) {
