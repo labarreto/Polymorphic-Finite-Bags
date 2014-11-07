@@ -142,9 +142,11 @@ public class SBBT_ST<D extends Comparable> implements FiniteBag<D> {
         if (elt.compareTo(this.here) == 0) {
             return new SBBT_ST(this.left, this.here, this.right, this.count + n, this.isBlack);
         } else if (elt.compareTo(this.here) < 0) {
-            return new SBBT_ST(this.left.add(elt, n), this.here, this.right, this.count, this.isBlack).balance();
+            return new SBBT_ST(this.left.add(elt, n), this.here, 
+                    this.right, this.count, this.isBlack).balance();
         } else {
-            return new SBBT_ST(this.left, this.here, this.right.add(elt, n), this.count, this.isBlack).balance();
+            return new SBBT_ST(this.left, this.here, 
+                    this.right.add(elt, n), this.count, this.isBlack).balance();
         }
 
     }
